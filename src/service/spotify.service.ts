@@ -10,10 +10,5 @@ export class SpotifyService {
 
   constructor(private http: HttpClient) { }
 
-  login() {
-    
-  }
 
-  
-  
 }

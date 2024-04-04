@@ -27,7 +27,12 @@ password: any = '';
   }
 
   login() {
-    
+    const clientId = '910ce5a3c01a467f9c6454ba844cddc6'; // Codigo de cliente id de spotify
+    const redirectUri = 'http://localhost:4200/inicio'; // Direccion de redireccionamiento una vez que el usuario inicia sesion
+    const scope = 'user-read-private user-library-read playlist-read-private playlist-modify-public playlist-modify-private'; // Permisos de acceso
+
+    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
+    window.location.href = authUrl;
   }
 
 

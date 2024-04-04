@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -6,23 +7,32 @@ import { Injectable } from '@angular/core';
 export class SessionService {
 
   private username: any = null;
+
   constructor() {
-    if (sessionStorage.getItem('username')) {
-      this.username = JSON.parse(sessionStorage.getItem('username') || 'null');
+    this.loadUsername();
+  }
+
+  private loadUsername() {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('username')) {
+      this.username = JSON.parse(localStorage.getItem('username') || 'null');
     }
   }
 
   iniciarSesion(username: any) {
     this.username = username;
-    sessionStorage.setItem('username', JSON.stringify(this.username));
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('username', JSON.stringify(this.username));
+    }
   }
 
   finalizarSesion() {
     this.username = null;
-    sessionStorage.removeItem('username');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('username');
+    }
   }
 
-  obtenerusername() {
+  obtenerUsername() {
     return this.username;
   }
 
