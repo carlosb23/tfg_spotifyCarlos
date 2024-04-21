@@ -6,7 +6,7 @@ import { InicioComponent } from './componentes/inicio/inicio.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoginComponent, InicioComponent],
+  imports: [RouterOutlet, LoginComponent, InicioComponent,],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

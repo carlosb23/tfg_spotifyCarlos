@@ -1,7 +1,20 @@
 <div class="logindesing">
     <div class="header">
         <img src="assets/images/spotify-logo-inicio.png" alt="">
-        <button class="Realizado">Creador</button>
+        <button (click)="abrirCreador()" class="Realizado">Autor</button>
+        <div *ngIf="showPopup" class="boxRealizado" [ngStyle]="popupStyle">
+            <h2 class="h2creador">tfg_spotifyCarlos</h2>
+            <p>
+                Carlos Bustos
+            </p>
+            <hr>
+            <p class="pcreador">Enlaces del proyecto</p>
+            <div style="display: flex;">
+                <a href="https://github.com/carlosb23/tfg_spotifyCarlos.git" class="linkcreador"><img src="assets/images/github.png" class="imglogos" alt=""> Github Carlos</a>
+                <a href="https://developer.spotify.com" class="linkcreador"><img src="assets/images/spotifydev.png" class="imglogos" alt="" style="margin-bottom: -4px;"> DevelopersWeb</a>
+            </div>
+            
+        </div>
     </div>
     <div class="base">
         <button class="loginbutton" (click)="login()">

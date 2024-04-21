@@ -7,6 +7,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    font-family: 'Roboto', sans-serif;
 }
 
 .header {
@@ -26,6 +27,47 @@
     align-items: center;
     top: -10%;
     left: 39%;
+}
+
+.Realizado:hover {
+    color: #37AB00;
+}
+
+.boxRealizado {
+    display: none;
+    margin-top: 5px;
+    width: 400px;
+    height: 200px;
+    border-radius: 8px;
+    position: absolute;
+    z-index: 1;
+    background-color: #f1f1f1;
+    padding: 20px 40px 20px 40px;
+    transition-property: opacity, top, left;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.3, 0, 0, 1);
+    left: 50%;
+    transform: translateX(-40%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.imglogos {
+    width: 15%;
+    margin: auto;
+}
+
+.linkcreador {
+    text-decoration: none;
+    color: #0b5f1d;
+    margin-left: 5px;
+}
+
+.boxRealizado {
+    display: block;
+}
+
+.h2creador {
+    color: #0b5f1d;
 }
 
 .base {
@@ -54,7 +96,9 @@ img {
     font-size: 16px;
 }
 
-.loginbutton::before {
+.loginbutton:hover::before {
+
+    font-size: 22px;
     content: '';
     /* Contenido vacío necesario para los pseudoelementos */
     position: absolute;
@@ -77,26 +121,27 @@ img {
 
 }
 
-.loginbutton:hover::before {
+.loginbutton:hover {
     visibility: visible;
     /* Hacemos visible el borde al pasar el cursor */
+    font-size: 22px;
 }
 
 @keyframes border-rotation {
     0% {
-        border-color: red;
+        border-color: rgb(9, 199, 10);
     }
 
     33% {
-        border-color: green;
+        border-color: rgba(11, 199, 8, 0.904);
     }
 
     66% {
-        border-color: blue;
+        border-color: rgba(10, 199, 7, 0.829);
     }
 
     100% {
-        border-color: red;
+        border-color: rgba(9, 199, 6, 0.432);
     }
 }
 
@@ -111,4 +156,13 @@ img {
         font-size: 14px;
     }
 
+    .Realizado {
+        top: -10%;
+        left: 20%;
+        /* Ajustar tamaño para pantallas pequeñas */
+        padding: 8px 16px;
+        /* Ajustar espaciado para pantallas pequeñas */
+        font-size: 16px;
+
+    }
 }
