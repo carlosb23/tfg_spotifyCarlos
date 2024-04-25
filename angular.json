@@ -85,7 +85,7 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
-              "src/favicon.ico",
+              "assets/images/spotifydev.png",
               "src/assets"
             ],
             "styles": [

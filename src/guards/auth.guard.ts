@@ -1,44 +1,27 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
-import { SpotifyService } from '../service/spotify.service';
+import { inject } from '@angular/core';
+import { CanActivateFn, Router} from '@angular/router';
 
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard implements CanActivate {
-  
-  
-  constructor(private router: Router,
-    private spotifyService: SpotifyService
-  ) { 
-  }
+export const auth: CanActivateFn = () => {
+  const router = inject(Router);
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      return this.Usuarionoreconocido();
+  const Usuarionoreconocido = () => {
+    // Verificar si localStorage está disponible
+    if (typeof localStorage !== 'undefined') {
+      localStorage.clear();
     }
-
-    return new Promise((resolve) => {
-      const usuariocreado = this.spotifyService.inicializarUsuario();
-      if (usuariocreado) {
-        resolve(true);
-      } else {
-        resolve(this.Usuarionoreconocido());
-      }
-    })
-  }
-
-  Usuarionoreconocido() {
-    localStorage.clear();
-    this.router.navigate(['/login']);
+    router.navigate(['/login']);
     return false;
   }
 
-}
+  // Verificar si localStorage está disponible
+  if (typeof localStorage !== 'undefined') {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return Usuarionoreconocido();
+    }
+  }
+  
+  // Asegúrate de devolver un valor booleano en todos los casos
+  return true;
+};
