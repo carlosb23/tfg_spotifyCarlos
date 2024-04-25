@@ -94,37 +94,13 @@ img {
     right: 20px;
     padding: 10px 20px;
     font-size: 16px;
-}
-
-.loginbutton:hover::before {
-
-    font-size: 22px;
-    content: '';
-    /* Contenido vacío necesario para los pseudoelementos */
-    position: absolute;
-    /* Posiciona el borde de manera absoluta */
-    top: -3px;
-    /* Ajusta la posición del borde */
-    left: -3px;
-    /* Ajusta la posición del borde */
-    right: -3px;
-    /* Ajusta la posición del borde */
-    bottom: -3px;
-    /* Ajusta la posición del borde */
-    border: 3px solid;
-    /* Grosor y tipo de borde */
-    border-radius: inherit;
-    /* Hereda el radio de borde del botón */
-    z-index: -1;
-    /* Coloca el borde detrás del botón */
-    animation: border-rotation 5s linear infinite;
-
+    transition: transform 0.3s ease;
 }
 
 .loginbutton:hover {
     visibility: visible;
     /* Hacemos visible el borde al pasar el cursor */
-    font-size: 22px;
+    transform: scale(1.2);
 }
 
 @keyframes border-rotation {

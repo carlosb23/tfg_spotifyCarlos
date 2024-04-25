@@ -21,8 +21,9 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/spotify.png",
+              "src/assets",
+              "src/_redirects"
             ],
             "styles": [
               "src/styles.css"
@@ -85,8 +86,9 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
-              "assets/images/spotifydev.png",
+              "src/spotify.png",
               "src/assets"
+
             ],
             "styles": [
               "src/styles.css"
