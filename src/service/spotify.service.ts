@@ -31,6 +31,7 @@ export class SpotifyService {
     if (!token)
       return false;
 
+
     try {
       this.definirAccessToken(token);
       await this.obterSpotifyUsuario();
@@ -50,9 +51,9 @@ export class SpotifyService {
   obtenerUrlLogin() {
     let urlbase = 'https://accounts.spotify.com/authorize?';
     const clientId = 'client_id=' + '910ce5a3c01a467f9c6454ba844cddc6' + '&'; // Codigo de cliente id de spotify
-    const redirectUri = '&redirect_uri=' + 'http://localhost:4200/login/'; // Direccion de redireccionamiento una vez que el usuario inicia sesion
+    const redirectUri = '&redirect_uri=' + 'https://tfgspotifycarlos.netlify.app/login'; // Direccion de redireccionamiento una vez que el usuario inicia sesion
     const scope = '&scope=' + 'user-read-private user-library-read playlist-read-private playlist-modify-public playlist-modify-private'; // Permisos de acceso
-    const response_type = '&response_type=token&show_dialog=true';
+    const response_type = '&response_type=token&show_dialog=true&';
 
     return urlbase + clientId + redirectUri + scope + response_type;
   }
