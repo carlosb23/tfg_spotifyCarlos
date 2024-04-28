@@ -9,10 +9,10 @@ export function SpotifyUserParaUsuario(user: SpotifyApi.CurrentUsersProfileRespo
     }
  }
 
- export function SpotifyPlaylistParaPlaylist(playlist: SpotifyApi.PlaylistObjectSimplified): IPlaylist {
+ export function SpotifyPlaylistParaPlaylist(playlist: SpotifyApi.SinglePlaylistResponse): IPlaylist {
   return {
+      id: playlist.id,
       name: playlist.name,
-      country: '', 
-      songs: [] 
+      imgenUrl: playlist.images.length > 0 ? playlist.images[0].url : '' // Obtener la URL de la imagen de la lista de reproducción
   };
 }

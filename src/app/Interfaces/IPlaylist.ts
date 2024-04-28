@@ -1,10 +1,5 @@
 export interface IPlaylist {
+    id: string,
     name: string,
-    country: string,
-    songs: {
-        id: string,
-        name: string,
-        artistas: string,
-        imagenUrl: string
-    }[]
+    imgenUrl: string
 }

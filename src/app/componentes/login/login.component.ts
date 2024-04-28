@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     const token = this.sessionService.obtenertokenurlcallback();
     if (!!token) {
       this.sessionService.definirAccessToken(token);
-      this.router.navigate(['/inicio']);
+      this.router.navigate(['/inicio/home']);
     }
   }
 

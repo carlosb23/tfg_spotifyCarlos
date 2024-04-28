@@ -1,0 +1,11 @@
+<div class="flex" *ngIf="usuario">
+    <img [src]="usuario.imagenUrl" alt="">
+    <span>{{usuario.name}}</span>
+    <fa-icon class="icono" [icon]="salirIcono" (click)="logout()"></fa-icon>
+</div>
+
+<div class="movil flex" *ngIf="usuario" (click)="logout()">
+    <img [src]="usuario.imagenUrl" alt="">
+    <span>{{usuario.name}}</span>
+    <fa-icon class="icono" [icon]="salirIcono"></fa-icon>
+</div>

@@ -1,4 +1,3 @@
-
 :host {
     max-width: 300px;
     max-height: 100vh;
@@ -16,7 +15,7 @@
     height: 100%;
     padding: 0px 40px 0px 40px;
     height: 100vh;
-    
+
 }
 
 .menus imagen-spoti-cointainer {
@@ -24,7 +23,7 @@
     align-items: center;
     margin: 0 auto;
     text-align: center;
-    
+
 }
 
 .imagen-spoti-cointainer img {
@@ -33,19 +32,19 @@
     margin-bottom: 25px;
 }
 
-.menu-contenedor{
+.menu-contenedor {
     width: 100%;
     flex-direction: column;
     margin-bottom: 10px;
 }
 
-.menu-contenedor > .flex {
-   flex-direction: column;
-   justify-content: flex-start;
-   align-items: center;
+.menu-contenedor>.flex {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.playlist-title{
+.playlist-title {
     margin: 10px 0px;
     align-self: flex-start;
     font-weight: 700;
@@ -53,6 +52,118 @@
     color: #0000004D;
 }
 
-.playlist-scroll{
+.playlist-scroll {
     width: 100%;
+    max-height: calc(95vh - 200px);
+    ;
+    overflow-y: auto;
+}
+
+.playlist-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.usuario-info {
+    flex-grow: 0;
+    display: block;
+    bottom: 0;
+    align-self: flex-end;
+    height: 70px;
+    width: 100%;
+}
+
+/*Version movil en caso de reducirse la pantalla*/
+
+.menu-movil {
+    display: none;
+    /* Oculta el menú móvil por defecto */
+}
+
+@media only screen and (max-width: 600px) {
+
+    /* Estilos específicos para dispositivos móviles */
+    .menu-contenedor {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centra los elementos horizontalmente */
+        margin-top: 20px; /* Añade un margen superior */
+    }
+
+    :host {
+        box-shadow: none;
+        max-height: 100vh;
+        max-width: 537px;
+        overflow-y: hidden;
+        display: flex;
+        flex-direction: column;
+        background-color: #FFF;
+        text-align: center;
+    }
+
+    .menu-movil {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #FFF;
+        box-shadow: 1px 1px 15px #00000031;
+        z-index: 1000;
+        /* Asegúrate de que el menú esté por encima de otros elementos */
+        padding: 10px 0;
+        /* Ajusta el espaciado superior e inferior */
+    }
+
+    .menu-movil {
+        display: flex;
+        justify-content: space-between;
+        /* Espacio entre los botones */
+        align-items: center;
+        /* Centra los elementos verticalmente */
+        padding: 10px;
+        /* Ajusta el padding para los botones */
+    }
+
+    .playlist-scroll {
+        height: 50vh;
+        /* Ajusta la altura para dispositivos móviles */
+        max-height: 50vh;
+        /* Establece una altura máxima para dispositivos móviles */
+    }
+
+    .menus {
+        flex-grow: 1;
+        flex-direction: column;
+        height: 100%;
+        padding: 0px 40px 0px 40px;
+        height: 1vh;
+
+    }
+
+    .imagen-spoti-cointainer img {
+        width: 30%;
+        margin-top: 32px;
+        margin-bottom: 25px;
+        margin-left: auto;
+        margin-left: 73%;
+        /* Alinea a la derecha */
+        margin-right: 10px;
+        /* Añade un margen derecho para separar del borde */
+    }
+
+    .usuario-info {
+        flex-grow: 0;
+        display: block;
+        top: 0;
+        /* Alinea la parte superior */
+        left: 0;
+        /* Alinea a la izquierda */
+        align-self: flex-start;
+        /* Alinea hacia arriba a la izquierda */
+        height: 70px;
+        width: 100%;
+    }
+
 }

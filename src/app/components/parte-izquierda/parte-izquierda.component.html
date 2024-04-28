@@ -1,34 +1,48 @@
+
 <div class="menus">
     <div class="imagen-spoti-cointainer">
         <img src="../../../assets/images/spotify-logo.png" alt="dawdadaw">
     </div>
 
     <div class="menu-contenedor flex">
+        <app-boton-menu [descripcion]="'Home'" [selected]="menuSelected === 'Home'" (click)="botonClick('Home')">
+            <fa-icon [icon]="homeIcon"></fa-icon>
+        </app-boton-menu>
+        <app-boton-menu [descripcion]="'Buscar'" [selected]="menuSelected === 'Buscar'" (click)="botonClick('Buscar')">
+            <fa-icon [icon]="searchIcon"></fa-icon>
+        </app-boton-menu>
+        <app-boton-menu [descripcion]="'Globales'" [selected]="menuSelected === 'Globales'"
+            (click)="botonClick('Globales')">
+            <fa-icon [icon]="countryIcon"></fa-icon>
+        </app-boton-menu>
+
+    </div>
+
+    <div class="menu-movil flex">
         <app-boton-menu [descripcion]="'Inicio'" [selected]="menuSelected === 'Inicio'" (click)="botonClick('Inicio')">
             <fa-icon [icon]="homeIcon"></fa-icon>
         </app-boton-menu>
         <app-boton-menu [descripcion]="'Buscar'" [selected]="menuSelected === 'Buscar'" (click)="botonClick('Buscar')">
             <fa-icon [icon]="searchIcon"></fa-icon>
         </app-boton-menu>
-        <app-boton-menu [descripcion]="'Artistas'" [selected]="menuSelected === 'Artistas'" (click)="botonClick('Artistas')">
+        <app-boton-menu [descripcion]="'Globales'" [selected]="menuSelected === 'Globales'"
+            (click)="botonClick('Globales')">
             <fa-icon [icon]="countryIcon"></fa-icon>
         </app-boton-menu>
-
     </div>
 
     <div class="menu-contenedor flex">
-        <span class="playlist-title">TOP GLOBALES</span>
+        <span class="playlist-title">TOP Globales</span>
 
         <div class="playlist-scroll">
-    <app-boton-menu *ngFor="let playlistItem of playlist" [descripcion]="playlistItem.name" [selected]="menuSelected === playlistItem.country" (click)="botonClick(playlistItem.country)">
-        <fa-icon [icon]="playlistIcon"></fa-icon>
-    </app-boton-menu>
-</div>
+            <app-boton-menu *ngFor="let playlistItem of playlist" [descripcion]="playlistItem.name"
+                [selected]="menuSelected === playlistItem.id" (click)="botonClick(playlistItem.id)">
+                <fa-icon [icon]="playlistIcon"></fa-icon>
+            </app-boton-menu>
+        </div>
     </div>
 </div>
 
-    
-
 <div class="usuario-info">
-
+    <app-parte-usuario></app-parte-usuario>
 </div>

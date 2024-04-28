@@ -4,15 +4,12 @@ import { Component, EventEmitter, Input, NgModule, Output } from '@angular/core'
 @Component({
   selector: 'app-boton-menu',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './boton-menu.component.html',
   styleUrl: './boton-menu.component.css'
 })
 export class BotonMenuComponent {
 
-  @NgModule({
-    imports: [CommonModule],
-  })
   
   @Input()
   descripcion = ''

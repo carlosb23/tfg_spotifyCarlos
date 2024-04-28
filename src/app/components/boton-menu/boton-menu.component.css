@@ -1,9 +1,9 @@
-:host{
+:host {
     display: block;
     width: 100%;
 }
 
-button{
+button {
     display: block;
     width: 100%;
     margin-bottom: 15px;
@@ -17,7 +17,7 @@ button{
     background-color: transparent;
 }
 
-span{
+span {
     display: inline-block;
     vertical-align: middle;
     width: 150px;
@@ -26,12 +26,40 @@ span{
     overflow: hidden;
     text-overflow: ellipsis;
     color: #23a03e;
-
-    
 }
 
 .selected,
-.selected> span {
+.selected>span {
     background-color: #23a03e;
     color: white;
+}
+
+
+@media only screen and (max-width: 600px) {
+    button {
+        display: block;
+        width: 66%;
+        margin-left: 17px;
+        margin-bottom: 1px;
+        border: 0;
+        padding: 10px 0px 10px 0px;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: 600;
+        font-size: .8rem;
+        cursor: pointer;
+        background-color: transparent;
+    }
+
+    fa-icon {
+        font-size: 1.2rem;
+        /* Tamaño del icono */
+    }
+
+    span {
+        color: #23a03e;
+        margin-top: 5px;
+        width: 90%;
+        margin-left: 4px;        
+    }
 }

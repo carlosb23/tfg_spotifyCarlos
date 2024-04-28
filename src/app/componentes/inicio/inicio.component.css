@@ -1,5 +1,10 @@
-.imagen-spoti-cointainer{
+:host{
     display: flex;
-    justify-content: center;
-    align-items: center;
+
+}
+
+.canciones-contenedor{
+    display: block;
+    width: 100%;
+    height: 100%;
 }

@@ -4,9 +4,9 @@
     height: 100%;
     position: absolute;
     overflow: hidden;
-    background-size: cover;
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir completamente el contenedor */
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center; /* Centra la imagen horizontal y verticalmente */
     font-family: 'Roboto', sans-serif;
 }
 
@@ -122,6 +122,12 @@ img {
 }
 
 @media screen and (max-width: 600px) {
+
+    .logindesing {
+        /* Ajustar tamaño de fondo para pantallas pequeñas */
+        background-image: url('../../../assets/images/fondomovil.gif');
+    }
+
     .loginbutton {
         top: 25px;
         /* Ajustar posición para pantallas pequeñas */
@@ -134,11 +140,19 @@ img {
 
     .Realizado {
         top: -10%;
-        left: 20%;
+        left: 14%;
         /* Ajustar tamaño para pantallas pequeñas */
         padding: 8px 16px;
         /* Ajustar espaciado para pantallas pequeñas */
         font-size: 16px;
 
+    }
+    .boxRealizado {
+        /* Ajustar tamaño de cuadro para pantallas pequeñas */
+        width: 80%;
+        height: auto;
+        max-width: 300px;
+        margin-left: -7%;
+        padding: 10px;
     }
 }
