@@ -1,5 +1,8 @@
+import { IMusica } from "./IMusica"
+
 export interface IPlaylist {
     id: string,
     name: string,
-    imgenUrl: string
+    imagenUrl: string
+    musicas?: IMusica[]
 }

@@ -12,25 +12,22 @@ export class PlacesService {
     return !!this.useLocation;
   }
 
-  constructor() { 
+  constructor() {
     this.getUserLocation();
   }
 
   public async getUserLocation(): Promise<[number, number]> {
-
     return new Promise((resolve, reject) => {
-
       navigator.geolocation.getCurrentPosition(
         ({ coords }) => {
-          this.useLocation = [coords.longitude, coords.latitude];
-          resolve(this.useLocation)
+          this.useLocation = [coords.latitude, coords.longitude];
+          resolve(this.useLocation);
         },
-          (err) => {
-          alert('No se pudo obtener la localización');
-          console.log(err);
+        (err) => {
+          console.error('Error al obtener la ubicación del usuario:', err);
+          reject(err);
         }
       );
     });
-
   }
 }

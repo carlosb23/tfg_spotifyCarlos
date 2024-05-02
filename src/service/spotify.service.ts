@@ -2,23 +2,28 @@
 import { Injectable } from '@angular/core';
 import Spotify from 'spotify-web-api-js';
 import { IUsuario } from '../app/Interfaces/IUsuario';
-import { SpotifyPlaylistParaPlaylist, SpotifyUserParaUsuario } from '../app/common/spotifyHelper';
+import { SpotifyPlaylistParaPlaylist, SpotifyTrackParaMusica, SpotifyUserParaUsuario } from '../app/common/spotifyHelper';
 import { IPlaylist } from '../app/Interfaces/IPlaylist';
 import { Console } from 'console';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { IMusica } from '../app/Interfaces/IMusica';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpotifyService {
+  obtenerMusica() {
+    throw new Error('Method not implemented.');
+  }
 
   spotifyApi: Spotify.SpotifyWebApiJs = null;
   usuario: IUsuario;
   private usuarioSubject = new BehaviorSubject<IUsuario>(null);
   usuarioObservable = this.usuarioSubject.asObservable();
 
-  constructor(private router: Router) {
+  constructor(private router: Router,private http: HttpClient) {
     this.spotifyApi = new Spotify();
   }
 
@@ -96,7 +101,7 @@ export class SpotifyService {
 
 
   async buscarListasExitosDeTodosLosPaises(): Promise<IPlaylist[]> {
-    const paises = ['US', 'UK', 'ES', 'FR', 'BR', 'DE', 'IT', 'JP', 'AU', 'BE'];
+    const paises = ['US', 'UK', 'ES', 'FR', 'BR', 'DE', 'IT', 'JP', 'AU', 'BE', 'global'];
 
     interface PlaylistIds {
       [key: string]: string;
@@ -113,7 +118,8 @@ export class SpotifyService {
       'IT': '37i9dQZEVXbIQnj7RRhdSX', // Italia
       'JP': '37i9dQZEVXbKXQ4mDTEBXq', // Japón
       'AU': '37i9dQZEVXbJPcfkRz0wJ0',  // Australia
-      'BE': '37i9dQZEVXbJNSeeHswcKB'  // Belgica
+      'BE': '37i9dQZEVXbJNSeeHswcKB',  // Belgica
+      'global': '37i9dQZEVXbMDoHDwVN2tF'
     };
   
     const playlistsPromises = paises.map(async (pais) => {
@@ -129,5 +135,68 @@ export class SpotifyService {
     localStorage.clear();
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
+  }
+
+
+  //Musica de la lista de spotify top global
+
+  async buscarMusicas(offset=0, limit=50): Promise<IMusica[]> {
+    const musicas = await this.spotifyApi.getMySavedTracks({offset, limit});
+    return musicas.items.map(x => SpotifyTrackParaMusica(x.track)); 
+  }
+
+  //ejecutar la musica
+
+  async ejecutarMusica(musicaId: string) {
+    await this.spotifyApi.queue(musicaId);
+    await this.spotifyApi.skipToNext();
+  }
+
+  async ejecutarmusicaaleatoria() {
+    await this.spotifyApi.play
+  }
+
+
+  //Ubicacion listas
+
+  async buscarListasExitosUbi(): Promise<IPlaylist[]> {
+    let country = await this.obtenerPaisPorGeolocalizacion();
+    if (!country) {
+      // Si la ubicación no está disponible, o el país no está en la lista, mostrar la lista global.
+      country = 'global';
+    }
+    return this.buscarListasExitosDePais(country);
+  }
+
+  async obtenerPaisPorGeolocalizacion(): Promise<string> {
+    try {
+      const url = 'https://ipapi.co/json/';
+      const response: any = await this.http.get(url).toPromise();
+      return response.country_code;
+    } catch (error) {
+      console.error('Error obteniendo la ubicación del usuario:', error);
+      return null;
+    }
+  }
+
+  async buscarListasExitosDePais(country: string): Promise<IPlaylist[]> {
+    // Lógica para obtener la lista de reproducción del país especificado
+    const playlistIds: { [key: string]: string } = {
+      'US': '37i9dQZEVXbLRQDuF5jeBp', // Estados Unidos
+      'UK': '37i9dQZEVXbLnolsZ8PSNw', // Reino Unido
+      'ES': '37i9dQZEVXbNFJfN1Vw8d9', // España
+      'FR': '37i9dQZEVXbIPWwFssbupI', // Francia
+      'BR': '37i9dQZEVXbMXbN3EUUhlg', // Brasil
+      'DE': '37i9dQZEVXbJiZcmkrIHGU', // Alemania
+      'IT': '37i9dQZEVXbIQnj7RRhdSX', // Italia
+      'JP': '37i9dQZEVXbKXQ4mDTEBXq', // Japón
+      'AU': '37i9dQZEVXbJPcfkRz0wJ0',  // Australia
+      'BE': '37i9dQZEVXbJNSeeHswcKB',  // Belgica
+      'global': '37i9dQZEVXbMDoHDwVN2tF' // Lista global
+    };
+
+    const playlistId = playlistIds[country];
+    const playlist = await this.spotifyApi.getPlaylist(playlistId);
+    return [SpotifyPlaylistParaPlaylist(playlist)];
   }
 }

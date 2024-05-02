@@ -54,9 +54,10 @@
 
 .playlist-scroll {
     width: 100%;
+    height: 55vh;
     max-height: calc(95vh - 200px);
-    ;
-    overflow-y: auto;
+    overflow: scroll;
+    margin-top: 10px;
 }
 
 .playlist-scroll::-webkit-scrollbar {

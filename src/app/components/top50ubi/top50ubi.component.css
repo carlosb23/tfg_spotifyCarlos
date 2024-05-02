@@ -1,6 +1,32 @@
 .card{
+    position: relative;
     box-shadow: 0px 0px 15px #00000008;
     background-color: white;
     border-radius: 10px;
+    border: 2px solid ; 
+    height: 200px;
+
 }
 
+.playlist-name{
+    color: #000;
+    text-shadow: 2px 2px 10px whitesmoke;
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-top: 4vh;
+    padding-left: 10px;
+}
+.span-titulo-bg{
+    color: #000;
+    text-shadow: 2px 2px 10px whitesmoke;
+}
+
+img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: .5;
+    z-index: 0;
+}
