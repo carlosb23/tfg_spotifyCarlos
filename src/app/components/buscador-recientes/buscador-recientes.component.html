@@ -1,0 +1,5 @@
+
+<input type="text" [(ngModel)]="buscador" (keyup.enter)="buscar()">
+<div class="sugerencias flex">
+    <span (click)="definirbuscador(busqueda)" *ngFor="let busqueda of buscarRecientes">{{busqueda}}</span>
+</div>

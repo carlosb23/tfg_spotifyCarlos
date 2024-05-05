@@ -3,6 +3,7 @@ import { addMilliseconds, format } from "date-fns";
 import { IMusica } from "../Interfaces/IMusica";
 import { IPlaylist } from "../Interfaces/IPlaylist";
 import { IUsuario } from "../Interfaces/IUsuario";
+import { newMusica } from "./spotifyHelper2";
 
 export function SpotifyUserParaUsuario(user: SpotifyApi.CurrentUsersProfileResponse): IUsuario{
     return {
@@ -22,6 +23,9 @@ export function SpotifyUserParaUsuario(user: SpotifyApi.CurrentUsersProfileRespo
 
 export function SpotifyTrackParaMusica(track: SpotifyApi.TrackObjectFull): IMusica {
 
+  if(!track)
+    return newMusica();
+
   const mstiempo = (ms: number) => {
     const data = addMilliseconds(new Date(0), ms);
     return format(data, 'mm:ss');
@@ -32,6 +36,7 @@ export function SpotifyTrackParaMusica(track: SpotifyApi.TrackObjectFull): IMusi
   return {
     id: track.uri,
     titulo: track.name,
+    previewUrl: track.preview_url,
     album: {
       id: track.album.id,
       name: track.album.name,
@@ -45,4 +50,7 @@ export function SpotifyTrackParaMusica(track: SpotifyApi.TrackObjectFull): IMusi
     tiempo: mstiempo(track.duration_ms),
       
   }
+
 }
+
+

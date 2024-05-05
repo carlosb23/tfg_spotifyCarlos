@@ -6,8 +6,8 @@ import { SpotifyPlaylistParaPlaylist, SpotifyTrackParaMusica, SpotifyUserParaUsu
 import { IPlaylist } from '../app/Interfaces/IPlaylist';
 import { Console } from 'console';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, catchError, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IMusica } from '../app/Interfaces/IMusica';
 
 @Injectable({
@@ -69,7 +69,7 @@ export class SpotifyService {
     let urlbase = 'https://accounts.spotify.com/authorize?';
     const clientId = 'client_id=' + '910ce5a3c01a467f9c6454ba844cddc6' + '&'; // Codigo de cliente id de spotify
     const redirectUri = '&redirect_uri=' + 'http://localhost:4200/login/'; // Direccion de redireccionamiento una vez que el usuario inicia sesion
-    const scope = '&scope=' + 'user-read-private user-library-read playlist-read-private playlist-modify-public playlist-modify-private'; // Permisos de acceso
+    const scope = '&scope=' + 'user-read-currently-playing user-modify-playback-state user-read-recently-played user-read-private user-library-read playlist-read-private playlist-modify-public playlist-modify-private'; // Permisos de acceso
     const response_type = '&response_type=token&show_dialog=true&';
 
     return urlbase + clientId + redirectUri + scope + response_type;
@@ -99,6 +99,28 @@ export class SpotifyService {
     localStorage.setItem('token', token);
   }
 
+  //En caso de caducar el token
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 401) {
+      // Redirigir al usuario a la página de inicio de sesión
+      this.router.navigate(['/login']);
+    }
+    return console.error('Algo salió mal; por favor, inténtelo de nuevo más tarde.');
+  }
+
+  // Método para obtener información del usuario
+  getUserInfo() {
+    return this.http.get('https://api.spotify.com/v1/me').pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          // Redirigir al usuario a la página de inicio de sesión
+          this.router.navigate(['/login']);
+        }
+        return throwError('Error al obtener información del usuario.');
+      })
+    );
+  }
+
 
   async buscarListasExitosDeTodosLosPaises(): Promise<IPlaylist[]> {
     const paises = ['US', 'UK', 'ES', 'FR', 'BR', 'DE', 'IT', 'JP', 'AU', 'BE', 'global'];
@@ -107,7 +129,7 @@ export class SpotifyService {
       [key: string]: string;
     }
   
-    // Define los IDs de las listas de reproducción para cada país
+    //IDs de las listas de reproducción para cada país
     const playlistIds: PlaylistIds = {
       'US': '37i9dQZEVXbLRQDuF5jeBp', // Estados Unidos
       'UK': '37i9dQZEVXbLnolsZ8PSNw', // Reino Unido
@@ -138,11 +160,34 @@ export class SpotifyService {
   }
 
 
-  //Musica de la lista de spotify top global
+  //Musica de la lista de spotify usuario mas gustadas
 
   async buscarMusicas(offset=0, limit=50): Promise<IMusica[]> {
     const musicas = await this.spotifyApi.getMySavedTracks({offset, limit});
-    return musicas.items.map(x => SpotifyTrackParaMusica(x.track)); 
+    console.log(musicas);
+    return musicas.items.map(x => SpotifyTrackParaMusica(x.track));
+    
+  }
+
+  async obtenerCancionesGustadasAleatorias(): Promise<IMusica[]> {
+    try {
+      // Obtener las canciones guardadas del usuario
+      const cancionesGuardadas = await this.spotifyApi.getMySavedTracks();
+  
+      // Filtrar las canciones para incluir solo aquellas con una URL de vista previa
+      const cancionesConPreview = cancionesGuardadas.items
+        .filter(item => item.track.preview_url !== null)
+        .map(item => SpotifyTrackParaMusica(item.track));
+  
+      if (cancionesConPreview.length === 0) {
+        throw new Error('No hay canciones disponibles con una URL de vista previa.');
+      }
+  
+      return cancionesConPreview;
+    } catch (error) {
+      console.error('Error al obtener canciones gustadas aleatorias:', error);
+      throw error;
+    }
   }
 
   //ejecutar la musica
@@ -152,9 +197,29 @@ export class SpotifyService {
     await this.spotifyApi.skipToNext();
   }
 
-  async ejecutarmusicaaleatoria() {
-    await this.spotifyApi.play
+  async ejecutarmusicaaleatoria(playlistId: string) {
+    try {
+      // Obtener la lista de canciones de la playlist
+      const canciones = await this.spotifyApi.getPlaylistTracks(playlistId);
+  
+      // Seleccionar una canción aleatoria de la lista de canciones
+      const indiceAleatorio = Math.floor(Math.random() * canciones.items.length);
+      const cancionAleatoria = canciones.items[indiceAleatorio].track;
+  
+      // Reproducir la canción aleatoria
+      await this.ejecutarMusica(cancionAleatoria.uri);
+    } catch (error) {
+      console.error('Error al ejecutar música aleatoria:', error);
+      throw error; // Relanzar el error para manejarlo en el componente
+    }
   }
+
+  async obtenerMusicaAtual(): Promise<IMusica>{
+    const musicaSpotify = await this.spotifyApi.getMyCurrentPlayingTrack();
+    return SpotifyTrackParaMusica(musicaSpotify.item);
+  }
+
+ 
 
 
   //Ubicacion listas
@@ -173,6 +238,7 @@ export class SpotifyService {
       const url = 'https://ipapi.co/json/';
       const response: any = await this.http.get(url).toPromise();
       return response.country_code;
+      
     } catch (error) {
       console.error('Error obteniendo la ubicación del usuario:', error);
       return null;

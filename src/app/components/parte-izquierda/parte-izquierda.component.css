@@ -7,6 +7,7 @@
     background-color: #FFF;
     box-shadow: 1px 1px 15px #00000031;
     text-align: center;
+    z-index: 1;
 }
 
 .menus {

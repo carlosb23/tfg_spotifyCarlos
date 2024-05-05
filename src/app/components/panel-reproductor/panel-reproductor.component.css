@@ -1,0 +1,26 @@
+:host{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1;
+}
+.reproductor {
+    display: flex;
+    padding: 8px 30px;
+    align-items: center;
+    width: 80%;
+}
+
+.album-image {
+    width: 50px; 
+    margin-right: 10px; 
+}
+
+.info {
+    flex-grow: 1; 
+}
+
+.titulo, .artistas {
+    margin: 0; 
+}

@@ -27,6 +27,7 @@ export class Top50ubiComponent implements OnInit {
       this.getTop50ByCountry(country);
     } else {
       console.error('User location is not available.');
+      await this.getTop50ByCountry('global');
     }
 
     this.obtenerUbicacion();
