@@ -4,6 +4,7 @@
     width: 100%;
     background-color: white;
     z-index: 1;
+    border: 1px solid #23a03e;
 }
 .reproductor {
     display: flex;
@@ -21,6 +22,32 @@
     flex-grow: 1; 
 }
 
-.titulo, .artistas {
+.titulo {
     margin: 0; 
+}
+
+.artistas-container {
+    max-width: 236px; /* ajusta según tu diseño */
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.artistas {
+    display: inline-block;
+}
+
+.anima {
+    animation: slide 30s linear infinite; /* Ajusta la duración según tus necesidades */
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(-1%); /* Empieza la animación desde la derecha */
+    }
+    50% {
+        transform: translateX(-68%); /* Llega hasta la izquierda */
+    }
+    100% {
+        transform: translateX(0%); /* Regresa hasta la derecha */
+    }
 }

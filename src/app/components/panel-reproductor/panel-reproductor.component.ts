@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-panel-reproductor',
   standalone: true,
-  imports: [FontAwesomeModule,HomeComponent,CommonModule],
+  imports: [FontAwesomeModule, HomeComponent, CommonModule],
   templateUrl: './panel-reproductor.component.html',
   styleUrl: './panel-reproductor.component.css'
 })
@@ -30,6 +30,11 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.obtenermusicasonando();
   }
+
+  ngAfterViewChecked(): void {
+    this.verificarAnchoTexto();
+  }
+
   obtenermusicasonando() {
     const sub = this.reproductorService.musicaActual.subscribe(musica => {
       this.musica = musica;
@@ -39,13 +44,27 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    
+
   }
 
   obtenerArtistas(musica: IMusica) {
     return musica.artistas.map(artista => artista.name).join(', ');
   }
+
+  verificarAnchoTexto() {
+    const artistasContainer = document.querySelector('.artistas-container');
+    const artistas = document.querySelector('.artistas');
     
+    if (artistas && artistasContainer) {
+        const artistasWidth = artistas.getBoundingClientRect().width;
+        const containerWidth = artistasContainer.getBoundingClientRect().width;
+        
+        if (artistasWidth > containerWidth) {
+            artistas.classList.add('anima');
+        }
+    }
+  }
+
 }
 
 
