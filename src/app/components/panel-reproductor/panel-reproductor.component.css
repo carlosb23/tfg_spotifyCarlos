@@ -11,6 +11,7 @@
     padding: 8px 30px;
     align-items: center;
     width: 80%;
+    height: 76%;
 }
 
 .album-image {
@@ -38,6 +39,98 @@
 
 .anima {
     animation: slide 30s linear infinite; /* Ajusta la duración según tus necesidades */
+}
+
+.botones{
+    position: relative;
+    right: 131%;
+    top: -19%;
+}
+
+.play{
+    /*circulo de fondo*/
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 50%; /* Forma el fondo del ícono en un círculo */
+    padding: 11px;
+    color: #23a03e;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.play:hover{
+    color: #72e48a;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.retoava{
+    color: #23a03e;
+    cursor: pointer;
+
+}
+
+.retoava:hover{
+    color: #72e48a;
+    cursor: pointer;
+}
+
+.botones-y-barra{
+    display: flex; /* Hace que los elementos hijos se distribuyan en una fila */
+    width: 27%; /* Ancho del contenedor */
+    position: relative;
+    flex-direction: column;
+}
+
+.botones fa-icon {
+    margin-left: 45px; /* Ajusta el espaciado entre los iconos */
+    font-size: 18px;
+}
+
+.barra-progreso {
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    margin: 0 5px;
+    outline: none;
+    border: none;
+    background: linear-gradient(to right, #4CAF50 0%, #4CAF50 var(--range-value, 0%), transparent var(--range-value, 0%), transparent 100%);
+    transition: background 0.3s ease;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.barra-progreso::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.total{
+    font-size: 12px;
+    font-weight: bold;
+
+}
+
+.contador{
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.barra-progreso:hover::-webkit-slider-thumb {
+    background-color: #23a03e;
+}
+
+.contador-barra {
+    position: relative;
+    right: 161%;
+    top: -19%;
+    white-space: nowrap;
 }
 
 @keyframes slide {

@@ -2,10 +2,20 @@
     <img [src]="musica.album.imagenUrl" class="album-image">
     <div class="info">
         <p class="titulo">{{ musica.titulo }}</p>
-        <div class="animacion">
-            <div class="artistas-container">
-                <span class="artistas">{{ obtenerArtistas(musica) }}</span>
-            </div>
+        <div class="artistas-container">
+            <span class="artistas">{{ obtenerArtistas(musica) }}</span>
+        </div>
+    </div>
+    <div class="botones-y-barra">
+        <div class="botones">
+            <fa-icon class="retoava" [icon]="botonAnterior"></fa-icon>
+            <fa-icon class="play" [icon]="botonplay"></fa-icon>
+            <fa-icon class="retoava" [icon]="botonSiguiente"></fa-icon>
+        </div>
+        <div class="contador-barra">
+            <span class="contador">{{ formatarTiempo(contadorTiempo) }}</span>
+            <input type="range" class="barra-progreso" [value]="contadorTiempo" min="0" [max]="duracionTotal">
+            <span class="total">{{ formatarTiempo(duracionTotal) }}</span>
         </div>
     </div>
 </div>

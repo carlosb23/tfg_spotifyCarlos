@@ -14,6 +14,9 @@ import { IMusica } from '../app/Interfaces/IMusica';
   providedIn: 'root'
 })
 export class SpotifyService {
+  obtenerTiempoActualDeReproduccion() {
+    throw new Error('Method not implemented.');
+  }
   obtenerMusica() {
     throw new Error('Method not implemented.');
   }
@@ -256,8 +259,8 @@ export class SpotifyService {
       'DE': '37i9dQZEVXbJiZcmkrIHGU', // Alemania
       'IT': '37i9dQZEVXbIQnj7RRhdSX', // Italia
       'JP': '37i9dQZEVXbKXQ4mDTEBXq', // Japón
-      'AU': '37i9dQZEVXbJPcfkRz0wJ0',  // Australia
-      'BE': '37i9dQZEVXbJNSeeHswcKB',  // Belgica
+      'AU': '37i9dQZEVXbJPcfkRz0wJ0', // Australia
+      'BE': '37i9dQZEVXbJNSeeHswcKB', // Belgica
       'global': '37i9dQZEVXbMDoHDwVN2tF' // Lista global
     };
 
