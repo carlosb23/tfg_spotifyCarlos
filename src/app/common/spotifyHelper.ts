@@ -3,7 +3,7 @@ import { addMilliseconds, format } from "date-fns";
 import { IMusica } from "../Interfaces/IMusica";
 import { IPlaylist } from "../Interfaces/IPlaylist";
 import { IUsuario } from "../Interfaces/IUsuario";
-import { newMusica } from "./spotifyHelper2";
+import { newMusica, newPlaylist } from "./spotifyHelper2";
 
 export function SpotifyUserParaUsuario(user: SpotifyApi.CurrentUsersProfileResponse): IUsuario{
     return {
@@ -19,6 +19,18 @@ export function SpotifyUserParaUsuario(user: SpotifyApi.CurrentUsersProfileRespo
       name: playlist.name,
       imagenUrl: playlist.images.length > 0 ? playlist.images[0].url : '' // Obtener la URL de la imagen de la lista de reproducción
   };
+}
+
+export function SpotifySinglePlaylistParaPlaylist(playlist: SpotifyApi.SinglePlaylistResponse) { 
+  if(!playlist)
+    return newPlaylist();
+
+  return {
+    id: playlist.id,
+    name: playlist.name,
+    imagenUrl: playlist.images.length > 0 ? playlist.images[0].url : '',
+    musicas: []
+  }
 }
 
 export function SpotifyTrackParaMusica(track: SpotifyApi.TrackObjectFull): IMusica {

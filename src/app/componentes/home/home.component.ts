@@ -14,12 +14,14 @@ import { ReproductorService } from '../../../service/reproductor.service';
 import { newMusica } from '../../common/spotifyHelper2';
 import { BuscadorRecientesComponent } from '../../components/buscador-recientes/buscador-recientes.component';
 import { PanelReproductorComponent } from '../../components/panel-reproductor/panel-reproductor.component';
+import { ListaMusicasComponent } from '../lista-musicas/lista-musicas.component';
+import { BannerplaylistComponent } from '../../components/bannerplaylist/bannerplaylist.component';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [Top50ubiComponent,PanelDerechoComponent,ParteUsuarioComponent,CommonModule,FontAwesomeModule,BuscadorRecientesComponent,PanelReproductorComponent],
+  imports: [Top50ubiComponent,PanelDerechoComponent,ParteUsuarioComponent,CommonModule,FontAwesomeModule,BuscadorRecientesComponent,PanelReproductorComponent,ListaMusicasComponent,BannerplaylistComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

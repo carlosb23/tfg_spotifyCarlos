@@ -8,14 +8,20 @@
     </div>
     <div class="botones-y-barra">
         <div class="botones">
-            <fa-icon class="retoava" [icon]="botonAnterior"></fa-icon>
-            <fa-icon class="play" [icon]="botonplay"></fa-icon>
-            <fa-icon class="retoava" [icon]="botonSiguiente"></fa-icon>
+            <fa-icon class="retoava" [icon]="botonAnterior" (click)="cancionAnterior()"></fa-icon>
+            <fa-icon class="play" [icon]="reproduciendo ? botonPausar : botonplay"></fa-icon>
+            <fa-icon class="retoava" [icon]="botonSiguiente" (click)="proximaCancion()"></fa-icon>
         </div>
         <div class="contador-barra">
             <span class="contador">{{ formatarTiempo(contadorTiempo) }}</span>
             <input type="range" class="barra-progreso" [value]="contadorTiempo" min="0" [max]="duracionTotal">
             <span class="total">{{ formatarTiempo(duracionTotal) }}</span>
         </div>
+    </div>
+
+    <fa-icon class="agrandar" [icon]="iconoAgrandar"></fa-icon>
+
+    <div class="album-grande">
+        
     </div>
 </div>

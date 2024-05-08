@@ -3,7 +3,7 @@ import { IMusica } from '../../Interfaces/IMusica';
 import { newMusica } from '../../common/spotifyHelper2';
 import { ReproductorService } from '../../../service/reproductor.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlay, faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
+import { faCaretSquareRight, faPause, faPlay, faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { HomeComponent } from '../../componentes/home/home.component';
 import { CommonModule } from '@angular/common';
@@ -25,12 +25,17 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   botonplay = faPlay;
   botonAnterior = faStepBackward;
   botonSiguiente = faStepForward;
+  botonPausar = faPause;
+  iconoAgrandar = faCaretSquareRight;
 
   //Para el contador
 
   contadorTiempo: number = 0;
   duracionTotal: number = 0;
+  tiempoReproduccionActual: number = 0;
   intervalId: any;
+
+  reproduciendo: boolean = false;
 
   constructor(private reproductorService: ReproductorService) { }
 
@@ -86,6 +91,7 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   iniciarContadorDeTiempo(): void {
     // Limpiar el intervalo anterior antes de iniciar uno nuevo
     clearInterval(this.intervalId);
+    this.reproduciendo = true;
 
     this.contadorTiempo = 0; // Reiniciar el contador de tiempo
     this.intervalId = setInterval(() => {
@@ -98,7 +104,7 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
         clearInterval(this.intervalId); // Detener el intervalo cuando se alcanza la duración total
       }
     }, 1000); // Actualizar cada segundo
-}
+  }
 
 
   formatarTiempo(tiempo: number): string {
@@ -107,6 +113,15 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
     const minutosFormateados = minutos < 10 ? `${minutos}` : minutos;
     const segundosFormateados = segundos < 10 ? `0${segundos}` : segundos;
     return `${minutosFormateados}:${segundosFormateados}`;
+  }
+
+  
+  cancionAnterior() {
+    this.reproductorService.cancionAnterior();
+  }
+
+  proximaCancion() {
+    this.reproductorService.proximaCancion();
   }
 
 }

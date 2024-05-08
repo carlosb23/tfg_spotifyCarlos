@@ -36,7 +36,7 @@
 
         <div class="playlist-scroll">
             <app-boton-menu *ngFor="let playlistItem of playlist" [descripcion]="playlistItem.name"
-                [selected]="menuSelected === playlistItem.id" (click)="botonClick(playlistItem.id)">
+                [selected]="menuSelected === playlistItem.id" (click)="irPlaylist(playlistItem.id)">
                 <fa-icon [icon]="playlistIcon"></fa-icon>
             </app-boton-menu>
         </div>

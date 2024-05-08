@@ -124,6 +124,20 @@ export class SpotifyService {
     );
   }
 
+  async buscarMusicasPlaylist(playlistId: string) {
+    const playlistSpotify = await this.spotifyApi.getPlaylist(playlistId);
+
+    if(!playlistSpotify) {
+      return null;
+    }
+
+    const playlist = SpotifyPlaylistParaPlaylist(playlistSpotify);
+    const musicaSpotify = await this.spotifyApi.getPlaylistTracks(playlistId);
+
+    playlist.musicas = musicaSpotify.items.map(musica => SpotifyTrackParaMusica(musica.track as SpotifyApi.TrackObjectFull));
+
+    return playlist;
+  }
 
   async buscarListasExitosDeTodosLosPaises(): Promise<IPlaylist[]> {
     const paises = ['US', 'UK', 'ES', 'FR', 'BR', 'DE', 'IT', 'JP', 'AU', 'BE', 'global'];
@@ -155,6 +169,8 @@ export class SpotifyService {
   
     return Promise.all(playlistsPromises);
   }
+
+  
 
   logout() {
     localStorage.clear();
@@ -221,6 +237,17 @@ export class SpotifyService {
     const musicaSpotify = await this.spotifyApi.getMyCurrentPlayingTrack();
     return SpotifyTrackParaMusica(musicaSpotify.item);
   }
+
+  async obtenerMusicaAnterior(){
+    await this.spotifyApi.skipToPrevious();
+   
+  }
+
+  async obtenerMusicaSeguiente(){
+    await this.spotifyApi.skipToNext();
+  }
+
+  
 
  
 

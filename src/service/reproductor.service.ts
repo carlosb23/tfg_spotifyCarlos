@@ -32,4 +32,12 @@ export class ReproductorService {
     this.musicaActual.next(musica);
   }
 
+  async cancionAnterior() {
+    await this.spotifyService.obtenerMusicaAnterior();
+  }
+
+  async proximaCancion() {
+    await this.spotifyService.obtenerMusicaSeguiente();
+  }
+
 }

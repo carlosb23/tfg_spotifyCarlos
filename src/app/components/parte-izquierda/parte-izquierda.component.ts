@@ -68,4 +68,9 @@ export class ParteIzquierdaComponent implements OnInit {
     this.router.navigateByUrl('inicio/home');
   }
 
+  irPlaylist(playlistId: string) {
+    this.menuSelected = playlistId;
+    this.router.navigateByUrl(`inicio/lista/playlist/${playlistId}`);
+  }
+
 }
