@@ -28,7 +28,7 @@ export function SpotifySinglePlaylistParaPlaylist(playlist: SpotifyApi.SinglePla
   return {
     id: playlist.id,
     name: playlist.name,
-    imagenUrl: playlist.images.length > 0 ? playlist.images[0].url : '',
+    imagenUrl: playlist.images.pop().url,
     musicas: []
   }
 }

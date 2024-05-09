@@ -20,7 +20,7 @@
 .musica-top::-webkit-scrollbar-thumb {
     background-color: rgba(35, 160, 62, .6);
     border-radius: 10px; 
- }
+}
 
 .panel-derecho {
     height: 100%;
@@ -44,9 +44,6 @@
     display: block;
 }
 
-.tablemusic {
-    margin-top: 3vh;
-}
 
 button {
     margin-bottom: 10px;
@@ -86,7 +83,7 @@ img{
     text-align: left;
     table-layout: fixed;
     border-collapse: collapse;
-
+    margin-top: 3vh;
 }
 
 

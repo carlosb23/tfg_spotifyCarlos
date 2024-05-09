@@ -1,7 +1,7 @@
 <div class="card">
-    <div class="listanombre">
-        <span>{{Texto}}</span>
-    </div>
-    <div class="imagen" [style.background-image]="'url('+ImagenUrl+')'">
+    <div class="listanombre"></div>
+    <div class="imagen" [style.background-image]="'url(' + ImagenUrl + ')'">
+        <img [src]="ImagenUrl" alt="Imagen de lista de reproducción">
+        <span>{{ Texto }}</span>
     </div>
 </div>

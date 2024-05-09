@@ -1,0 +1,138 @@
+:host{
+    display: flex;
+    justify-content: space-between;
+}
+
+.lista{
+    padding-bottom: 20px;
+    width: 100%;
+    background-color: whitesmoke;
+}
+
+.scrolltable {
+    max-height: 70vh;
+    overflow-y: scroll;
+    width: 100%;
+    background-color: whitesmoke;
+}
+
+.panel-derecho {
+    height: 100vh;
+}
+
+.lista-musicas {
+    padding: 0px 50px;
+    width: 100%;
+    padding-bottom: 20px;
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+
+img{
+    width: 100%;
+}
+
+.reproduciendose {
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0px 0px 15px #00000033;
+}
+
+.scrolltable::-webkit-scrollbar {
+    width: 7px;
+ }
+ 
+.scrolltable::-webkit-scrollbar-thumb {
+    background-color: rgba(35, 160, 62, .6);
+    border-radius: 10px; 
+}
+
+
+
+
+/*Tabla y mas*/
+
+.tablemusic {
+    width: 98%;
+    text-align: left;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin-top: 3vh;
+    margin-left: 2vh;
+    max-height: 100vh;
+    overflow-y: scroll;
+}
+
+
+.play {
+    color: #23a03e;
+    font-size: 15px;
+
+}
+
+thead th {
+    font-size: .75rem;
+    font-weight: 600;
+    color: #00000033;
+}
+
+th,
+td {
+    padding-right: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+tr:hover {
+    cursor: pointer;
+    color: #23a03e;
+
+}
+
+td {
+    padding: 10px 20px 10px 0px;
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: .8rem;
+}
+
+.w-5 {
+    width: 5%;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.w-35 {
+    width: 35%;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.directa {
+    text-align: right;
+}
+
+/* Banner playlist */
+.app-bannerplaylist {
+    transition: all 0.3s ease;
+}
+
+.app-bannerplaylist.shrink {
+    height: 50px;
+    position: absolute;
+    
+}

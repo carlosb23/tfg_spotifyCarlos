@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { IMusica } from '../../Interfaces/IMusica';
 import { newMusica } from '../../common/spotifyHelper2';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -6,11 +6,15 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SpotifyService } from '../../../service/spotify.service';
 import { BannerplaylistComponent } from '../../components/bannerplaylist/bannerplaylist.component';
+import { PanelDerechoComponent } from '../../components/panel-derecho/panel-derecho.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ReproductorService } from '../../../service/reproductor.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-lista-musicas',
   standalone: true,
-  imports: [BannerplaylistComponent],
+  imports: [BannerplaylistComponent,PanelDerechoComponent,FontAwesomeModule,CommonModule],
   templateUrl: './lista-musicas.component.html',
   styleUrl: './lista-musicas.component.css'
 })
@@ -19,13 +23,16 @@ export class ListaMusicasComponent {
   bannerImagenUrl = '';
   bannerTexto = '';
 
-  musicas: IMusica[] = [];
+  title = '';
+
+  musicas: IMusica[] = []
   musicaActual: IMusica = newMusica();
   playIcon = faPlay;
 
   subs: Subscription[] = []
+  isScrolled = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private spotifyService: SpotifyService) { }
+  constructor(private activatedRoute: ActivatedRoute, private spotifyService: SpotifyService,private reproductorService: ReproductorService) { }
 
   ngOnInit(): void {
     this.obtenerMusicas();
@@ -33,6 +40,12 @@ export class ListaMusicasComponent {
 
   ngOnDestroy(): void {
     this.subs.forEach(sub => sub.unsubscribe());
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    // Verifica si se ha hecho scroll hacia abajo
+    this.isScrolled = window.scrollY > 0;
   }
 
   obtenerMusicas() {
@@ -53,6 +66,7 @@ export class ListaMusicasComponent {
   async obtenerdatosplaylist(playlistId: string) {
     const playlistMusicas = await this.spotifyService.buscarMusicasPlaylist(playlistId);
     this.definirdatosPagina(playlistMusicas.name, playlistMusicas.imagenUrl, playlistMusicas.musicas);
+    this.title = 'Musicas Playlist: ' + playlistMusicas.name;
 
   }
 
@@ -60,9 +74,22 @@ export class ListaMusicasComponent {
 
   }
 
-  definirdatosPagina(bannerImagenUrl: string, bannerTexto: string, musicas: IMusica[]) {
+  definirdatosPagina(bannerTexto: string, bannerImagenUrl: string , musicas: IMusica[]) {
     this.bannerImagenUrl = bannerImagenUrl;
     this.bannerTexto = bannerTexto;
     this.musicas = musicas;
+  }
+
+  obtenerArtistas(musica: IMusica){
+    return musica.artistas.map(artista => artista.name).join(', ');
+  }
+
+  async executeMusica(musica: IMusica) {
+    try {
+      await this.spotifyService.ejecutarMusica(musica.id);
+      this.reproductorService.definirmusicaActual(musica);
+    } catch (error) {
+      alert('Contrata premium para esta funcionalidad o pulsa aleatorio');
+    }
   }
 }

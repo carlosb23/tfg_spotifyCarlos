@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 
 @Component({
   selector: 'app-bannerplaylist',
@@ -9,10 +9,13 @@ import { Component, Input } from '@angular/core';
 })
 export class BannerplaylistComponent {
 
-
   @Input()
   ImagenUrl = '';
 
+  
+
   @Input()
   Texto = '';
+  
+  
 }
