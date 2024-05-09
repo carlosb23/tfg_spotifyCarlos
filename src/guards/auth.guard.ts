@@ -1,9 +1,11 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router} from '@angular/router';
+import { SpotifyService } from '../service/spotify.service';
 
 
 export const auth: CanActivateFn = () => {
   const router = inject(Router);
+  const spotifyService = inject(SpotifyService);
 
   const Usuarionoreconocido = () => {
     // Verificar si localStorage está disponible
@@ -23,5 +25,10 @@ export const auth: CanActivateFn = () => {
   }
   
   // Asegúrate de devolver un valor booleano en todos los casos
-  return true;
+  const usuariocreado = spotifyService.inicializarUsuario();
+  if(usuariocreado)
+    return true;
+  else
+    return Usuarionoreconocido();
+
 };

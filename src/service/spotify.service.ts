@@ -6,7 +6,7 @@ import { SpotifyPlaylistParaPlaylist, SpotifyTrackParaMusica, SpotifyUserParaUsu
 import { IPlaylist } from '../app/Interfaces/IPlaylist';
 import { Console } from 'console';
 import { Router } from '@angular/router';
-import { BehaviorSubject, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IMusica } from '../app/Interfaces/IMusica';
 
@@ -14,12 +14,7 @@ import { IMusica } from '../app/Interfaces/IMusica';
   providedIn: 'root'
 })
 export class SpotifyService {
-  obtenerTiempoActualDeReproduccion() {
-    throw new Error('Method not implemented.');
-  }
-  obtenerMusica() {
-    throw new Error('Method not implemented.');
-  }
+  
 
   spotifyApi: Spotify.SpotifyWebApiJs = null;
   usuario: IUsuario;
@@ -112,7 +107,7 @@ export class SpotifyService {
   }
 
   // Método para obtener información del usuario
-  getUserInfo() {
+  getUserInfo(): Observable<any> {
     return this.http.get('https://api.spotify.com/v1/me').pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
@@ -216,22 +211,7 @@ export class SpotifyService {
     await this.spotifyApi.skipToNext();
   }
 
-  async ejecutarmusicaaleatoria(playlistId: string) {
-    try {
-      // Obtener la lista de canciones de la playlist
-      const canciones = await this.spotifyApi.getPlaylistTracks(playlistId);
-  
-      // Seleccionar una canción aleatoria de la lista de canciones
-      const indiceAleatorio = Math.floor(Math.random() * canciones.items.length);
-      const cancionAleatoria = canciones.items[indiceAleatorio].track;
-  
-      // Reproducir la canción aleatoria
-      await this.ejecutarMusica(cancionAleatoria.uri);
-    } catch (error) {
-      console.error('Error al ejecutar música aleatoria:', error);
-      throw error; // Relanzar el error para manejarlo en el componente
-    }
-  }
+
 
   async obtenerMusicaAtual(): Promise<IMusica>{
     const musicaSpotify = await this.spotifyApi.getMyCurrentPlayingTrack();
@@ -247,6 +227,9 @@ export class SpotifyService {
     await this.spotifyApi.skipToNext();
   }
 
+  async pausarMusica(){
+    await this.spotifyApi.pause();
+  }
   
 
  

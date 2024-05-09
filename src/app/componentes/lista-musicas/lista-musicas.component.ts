@@ -10,11 +10,12 @@ import { PanelDerechoComponent } from '../../components/panel-derecho/panel-dere
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReproductorService } from '../../../service/reproductor.service';
 import { CommonModule } from '@angular/common';
+import { PanelReproductorComponent } from '../../components/panel-reproductor/panel-reproductor.component';
 
 @Component({
   selector: 'app-lista-musicas',
   standalone: true,
-  imports: [BannerplaylistComponent,PanelDerechoComponent,FontAwesomeModule,CommonModule],
+  imports: [BannerplaylistComponent,PanelDerechoComponent,FontAwesomeModule,CommonModule,PanelReproductorComponent],
   templateUrl: './lista-musicas.component.html',
   styleUrl: './lista-musicas.component.css'
 })
@@ -36,6 +37,7 @@ export class ListaMusicasComponent {
 
   ngOnInit(): void {
     this.obtenerMusicas();
+    this.obtenermusicaActual();
   }
 
   ngOnDestroy(): void {
@@ -52,6 +54,14 @@ export class ListaMusicasComponent {
     const sub = this.activatedRoute.paramMap.subscribe(async params => {
       await this.obtenerdatospagina(params.get('tipo'), params.get('id'));
     });
+    this.subs.push(sub);
+  }
+
+  obtenermusicaActual() {
+    const sub = this.reproductorService.musicaActual.subscribe(musica =>{
+      this.musicaActual = musica;
+    });
+
     this.subs.push(sub);
   }
 

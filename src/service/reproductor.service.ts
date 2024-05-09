@@ -9,6 +9,7 @@ import { SpotifyService } from './spotify.service';
 })
 export class ReproductorService {
 
+  
   musicaActual = new BehaviorSubject<IMusica>(newMusica());
   timerId: any = null;
 
@@ -39,5 +40,11 @@ export class ReproductorService {
   async proximaCancion() {
     await this.spotifyService.obtenerMusicaSeguiente();
   }
+
+  async pausarMusica() {
+    await this.spotifyService.pausarMusica();
+  }
+
+  
 
 }

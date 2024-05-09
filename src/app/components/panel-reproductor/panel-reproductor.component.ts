@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { HomeComponent } from '../../componentes/home/home.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SpotifyService } from '../../../service/spotify.service';
 
 @Component({
   selector: 'app-panel-reproductor',
@@ -37,7 +38,7 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
 
   reproduciendo: boolean = false;
 
-  constructor(private reproductorService: ReproductorService) { }
+  constructor(private reproductorService: ReproductorService, private spotifyService: SpotifyService) { }
 
   ngOnInit(): void {
     this.obtenermusicasonando();
@@ -88,6 +89,7 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
       }
     }
   }
+  
   iniciarContadorDeTiempo(): void {
     // Limpiar el intervalo anterior antes de iniciar uno nuevo
     clearInterval(this.intervalId);
@@ -115,13 +117,32 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
     return `${minutosFormateados}:${segundosFormateados}`;
   }
 
-  
+
   cancionAnterior() {
-    this.reproductorService.cancionAnterior();
+    const indiceActual = this.musicas.findIndex(musica => musica.id === this.musica.id);
+    const indiceAnterior = indiceActual > 0 ? indiceActual - 1 : this.musicas.length - 1;
+    const cancionAnterior = this.musicas[indiceAnterior];
+
+    this.reproductorService.definirmusicaActual(cancionAnterior);
+    this.executeMusica(cancionAnterior);
   }
 
   proximaCancion() {
-    this.reproductorService.proximaCancion();
+    const indiceActual = this.musicas.findIndex(musica => musica.id === this.musica.id);
+    const indiceProximo = (indiceActual + 1) % this.musicas.length;
+    const proximaCancion = this.musicas[indiceProximo];
+
+    this.reproductorService.definirmusicaActual(proximaCancion);
+    this.executeMusica(proximaCancion);
+  }
+
+  async executeMusica(musica: IMusica) {
+    try {
+      await this.spotifyService.ejecutarMusica(musica.id);
+      this.reproductorService.definirmusicaActual(musica);
+    } catch (error) {
+      alert('Contrata premium para esta funcionalidad o pulsa aleatorio');
+    }
   }
 
 }
