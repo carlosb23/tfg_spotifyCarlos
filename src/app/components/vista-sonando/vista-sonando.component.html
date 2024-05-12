@@ -1,0 +1,15 @@
+<div class="div-sonando">
+    <span class="title">{{ obtenerArtistaPrincipal(musica) }}</span>
+    <img class="imagen-album" [src]="musica.album.imagenUrl" alt="">
+    <div class="info">
+        <p class="titulo-musica">{{ musica.titulo }}</p>
+        <div class="artistas-container">
+            <span class="artistas">{{ obtenerArtistas(musica) }}</span>
+        </div>
+    </div>
+
+    <div >
+        <img class="imagen-album" [src]="artista?.images[0].url" alt="">
+    </div>
+    
+</div>

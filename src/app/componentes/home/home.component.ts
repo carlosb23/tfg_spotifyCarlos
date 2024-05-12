@@ -92,7 +92,7 @@ export class HomeComponent implements OnDestroy{
     }
   }
 
-  async reproducirCancionAleatoriaGustada() {
+ /* async reproducirCancionAleatoriaGustada() {
     try {
       // Obtener todas las canciones con vista previa
       const musicas = await this.spotifyService.obtenerCancionesGustadasAleatorias();
@@ -111,7 +111,7 @@ export class HomeComponent implements OnDestroy{
     } catch (error) {
       console.error('Error al reproducir canción aleatoria gustada:', error);
     }
-  }
+  }*/
   private mostrarSnackBar(mensaje: string) {
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 4000 

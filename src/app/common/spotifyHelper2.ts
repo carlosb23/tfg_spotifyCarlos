@@ -21,7 +21,7 @@ export function newMusica(): IMusica {
 export function newArtista(): IArtista {
     return {
       id: '',
-      imagenUrl: '',
+      images: [],
       name: '',
       musicas: []
     }

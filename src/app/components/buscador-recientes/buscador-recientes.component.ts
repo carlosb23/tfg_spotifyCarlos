@@ -14,7 +14,7 @@ export class BuscadorRecientesComponent {
     'Top Global','Top 50 España', 'Bad Bunny', 'Saiko', 'Myke Tower'
   ]
 
-  buscador = 'Carlos';
+  buscador = 'Quevedo';
 
 
   definirbuscador(buscador:string){

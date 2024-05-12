@@ -9,6 +9,7 @@ import { HomeComponent } from '../../componentes/home/home.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SpotifyService } from '../../../service/spotify.service';
+import { IPlaylist } from '../../Interfaces/IPlaylist';
 
 @Component({
   selector: 'app-panel-reproductor',
@@ -21,6 +22,9 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   musica: IMusica = newMusica();
   subs: Subscription[] = []
   @Input() musicas: IMusica[] = [];
+  @Input() playlistSeleccionada: IPlaylist;
+
+
 
   //iconos
   botonplay = faPlay;
@@ -43,9 +47,9 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   tiempoReproduccionActual: number = 0;
   intervalId: any;
 
-  volumenActual: number = 50;
+  volumenActual: number = 30;
   isMuted: boolean = false;
-  volumenAnterior: number = 50;
+  volumenAnterior: number = 30;
 
   reproduciendo: boolean = false;
 
@@ -53,12 +57,14 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.obtenermusicasonando();
-    document.addEventListener('visibilitychange', this.handleVisibilityChange);
+  document.addEventListener('visibilitychange', () => this.handleVisibilityChange());
   }
 
   ngAfterViewChecked(): void {
     this.verificarAnchoTexto();
   }
+
+
 
   convertirTiempoASegundos(tiempo: string): number {
     const partes = tiempo.split(':');
@@ -81,7 +87,10 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     clearInterval(this.intervalId);
-    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    if (typeof document !== 'undefined') {
+      clearInterval(this.intervalId);
+      document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    }
   }
 
   obtenerArtistas(musica: IMusica) {
@@ -91,13 +100,15 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   verificarAnchoTexto() {
     const artistasContainer = document.querySelector('.artistas-container');
     const artistas = document.querySelector('.artistas');
-
+  
     if (artistas && artistasContainer) {
       const artistasWidth = artistas.getBoundingClientRect().width;
       const containerWidth = artistasContainer.getBoundingClientRect().width;
-
+  
       if (artistasWidth > containerWidth) {
         artistas.classList.add('anima');
+      } else {
+        artistas.classList.remove('anima'); // Remover la clase si ya no es necesaria
       }
     }
   }
@@ -187,6 +198,7 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
       alert('Contrata premium para esta funcionalidad/abre spotify https://open.spotify.com/intl-es o pulsa aleatorio');
     }
   }
+  
 
   pausarReproduccion(): void {
     this.reproduciendo = false;
@@ -262,6 +274,3 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   }
 
 }
-
-
-

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IMusica } from '../app/Interfaces/IMusica';
+import { IArtista } from '../app/Interfaces/IArtista';
 
 @Injectable({
   providedIn: 'root'
@@ -165,7 +166,18 @@ export class SpotifyService {
     return Promise.all(playlistsPromises);
   }
 
-  
+  async obtenerDetallesArtista(artistaId: string): Promise<IArtista> {
+    try {
+      // Utiliza el método getArtist de SpotifyWebApiJs para obtener los detalles del artista
+      const response = await this.spotifyApi.getArtist(artistaId);
+      return response;
+    } catch (error) {
+      console.error('Error al obtener detalles del artista:', error);
+      throw error;
+    }
+  }
+
+
 
   logout() {
     localStorage.clear();
@@ -183,7 +195,7 @@ export class SpotifyService {
     
   }
 
-  async obtenerCancionesGustadasAleatorias(): Promise<IMusica[]> {
+  /*async obtenerCancionesGustadasAleatorias(): Promise<IMusica[]> {
     try {
       // Obtener las canciones guardadas del usuario
       const cancionesGuardadas = await this.spotifyApi.getMySavedTracks();
@@ -202,7 +214,7 @@ export class SpotifyService {
       console.error('Error al obtener canciones gustadas aleatorias:', error);
       throw error;
     }
-  }
+  }*/
 
   //ejecutar la musica
 
@@ -210,8 +222,6 @@ export class SpotifyService {
     await this.spotifyApi.queue(musicaId);
     await this.spotifyApi.skipToNext();
   }
-
-
 
   async obtenerMusicaAtual(): Promise<IMusica>{
     const musicaSpotify = await this.spotifyApi.getMyCurrentPlayingTrack();

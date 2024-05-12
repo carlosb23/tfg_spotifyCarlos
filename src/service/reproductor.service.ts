@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IMusica } from '../app/Interfaces/IMusica';
 import { newMusica } from '../app/common/spotifyHelper2';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { SpotifyService } from './spotify.service';
 
 @Injectable({
@@ -12,6 +12,7 @@ export class ReproductorService {
   
   musicaActual = new BehaviorSubject<IMusica>(newMusica());
   timerId: any = null;
+
 
   constructor(private spotifyService: SpotifyService) { }
 
@@ -62,6 +63,8 @@ export class ReproductorService {
     await this.spotifyService.volumenCambia(volumen);
     
   }
+
+
   
 
 }

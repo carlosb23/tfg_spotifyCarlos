@@ -114,6 +114,15 @@ td {
     text-overflow: ellipsis;
 }
 
+tr {
+    position: relative;
+    z-index: 1;
+  }
+  
+  tr:first-child {
+    z-index: 2;
+  }
+
 tr:hover {
     cursor: pointer;
     color: #23a03e;

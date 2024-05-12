@@ -4,6 +4,7 @@ import { IMusica } from "../Interfaces/IMusica";
 import { IPlaylist } from "../Interfaces/IPlaylist";
 import { IUsuario } from "../Interfaces/IUsuario";
 import { newMusica, newPlaylist } from "./spotifyHelper2";
+import { IArtista, SpotifyImage } from "../Interfaces/IArtista";
 
 export function SpotifyUserParaUsuario(user: SpotifyApi.CurrentUsersProfileResponse): IUsuario{
     return {
@@ -33,6 +34,20 @@ export function SpotifySinglePlaylistParaPlaylist(playlist: SpotifyApi.SinglePla
   }
 }
 
+export function SpotifyArtistaParaArtista(spotifyArtista: SpotifyApi.ArtistObjectFull): IArtista {
+  const images: SpotifyImage[] = spotifyArtista.images.map(image => ({
+    url: image.url,
+    height: image.height,
+    width: image.width
+  }));
+
+  return {
+    id: spotifyArtista.id,
+    images: images,
+    name: spotifyArtista.name
+  };
+}
+
 export function SpotifyTrackParaMusica(track: SpotifyApi.TrackObjectFull): IMusica {
 
   if(!track)
@@ -58,6 +73,7 @@ export function SpotifyTrackParaMusica(track: SpotifyApi.TrackObjectFull): IMusi
     artistas: track.artists.map(artista => ({
       id: artista.id,
       name: artista.name
+      
     })),
     tiempo: mstiempo(track.duration_ms),
       

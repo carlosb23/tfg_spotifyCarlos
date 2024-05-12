@@ -1,0 +1,50 @@
+.div-sonando{
+    position: relative;
+    margin-top: 4vh;
+}
+
+.imagen-album{
+    height: 100%; /* Ajusta el tamaño de la imagen según sea necesario */
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 2vh;
+}
+
+.title{
+    margin-bottom: 10px;
+    color: #23a03e;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.titulo-musica{
+    margin: 0;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.anima {
+    animation: slide 30s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(-1%); /* Empieza la animación desde la derecha */
+    }
+    50% {
+        transform: translateX(-68%); /* Llega hasta la izquierda */
+    }
+    100% {
+        transform: translateX(0%); /* Regresa hasta la derecha */
+    }
+}
+
+.artistas-container {
+    max-width: 236px; 
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.artistas {
+    display: inline-block;
+}

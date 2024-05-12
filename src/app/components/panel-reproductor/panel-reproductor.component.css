@@ -24,11 +24,12 @@
 }
 
 .titulo {
-    margin: 0; 
+    margin: 0;
+    font-weight: bold;
 }
 
 .artistas-container {
-    max-width: 236px; /* ajusta según tu diseño */
+    max-width: 236px; 
     white-space: nowrap;
     overflow: hidden;
 }
@@ -38,7 +39,7 @@
 }
 
 .anima {
-    animation: slide 30s linear infinite; /* Ajusta la duración según tus necesidades */
+    animation: slide 30s linear infinite;
 }
 
 .botones{
@@ -50,7 +51,7 @@
 .play{
     /*circulo de fondo*/
     background-color: rgba(0, 0, 0, 0.8);
-    border-radius: 50%; /* Forma el fondo del ícono en un círculo */
+    border-radius: 50%; 
     padding: 11px;
     color: #23a03e;
     cursor: pointer;
@@ -199,6 +200,10 @@
 
 .barra-volumen:hover::-webkit-slider-thumb {
     background-color: #23a03e;
+}
+
+.barra-volumen svg{
+    cursor: pointer;
 }
 
 .div-volumen{
