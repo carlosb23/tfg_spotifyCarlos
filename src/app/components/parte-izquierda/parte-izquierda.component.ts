@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { ParteUsuarioComponent } from '../parte-usuario/parte-usuario.component';
 import { Router } from '@angular/router';
 import { Top50ubiComponent } from '../top50ubi/top50ubi.component';
+import { PlaylistService } from '../../../service/playlist.service';
 
 @Component({
   selector: 'app-parte-izquierda',
@@ -25,6 +26,7 @@ export class ParteIzquierdaComponent implements OnInit {
   playlist: IPlaylist[] = [];
 
 
+
   //Declaramos los iconos a usar
   homeIcon = faHome;
   searchIcon = faSearch;
@@ -32,13 +34,18 @@ export class ParteIzquierdaComponent implements OnInit {
   playlistIcon = faMusic;
 
   constructor(private router: Router,
-    private spotifyService: SpotifyService) {
+    private spotifyService: SpotifyService,
+    private playlistService: PlaylistService
+  ) {
 
   }
 
   ngOnInit(): void {
     this.initializeUserAndSearchPlaylist();
 
+    this.playlistService.getPlaylistId().subscribe(playlistId => {
+      this.menuSelected = playlistId;
+    });
   }
 
   async initializeUserAndSearchPlaylist() {
@@ -69,7 +76,7 @@ export class ParteIzquierdaComponent implements OnInit {
   }
 
   irPlaylist(playlistId: string) {
-    this.menuSelected = playlistId;
+    this.menuSelected = playlistId; // Actualiza el menú seleccionado
     this.router.navigateByUrl(`inicio/lista/playlist/${playlistId}`);
   }
 

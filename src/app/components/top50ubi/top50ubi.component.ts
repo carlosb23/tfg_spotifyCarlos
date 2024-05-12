@@ -3,6 +3,8 @@ import { SpotifyService } from '../../../service/spotify.service';
 import { PlacesService } from '../../../service/places.service';
 import { IPlaylist } from '../../Interfaces/IPlaylist';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { PlaylistService } from '../../../service/playlist.service';
 
 @Component({
   selector: 'app-top50ubi',
@@ -15,9 +17,10 @@ export class Top50ubiComponent implements OnInit {
 
   top50List: IPlaylist[] = [];
 
+
   
 
-  constructor(private placesService: PlacesService, private spotifyService: SpotifyService) { }
+  constructor(private placesService: PlacesService, private spotifyService: SpotifyService, private router: Router, private playlistService: PlaylistService) { }
 
 
   async ngOnInit(): Promise<void> {
@@ -70,6 +73,7 @@ export class Top50ubiComponent implements OnInit {
       if (country) {
         // Obtener la lista de reproducción del país del usuario
         this.top50List = await this.spotifyService.buscarListasExitosDePais(country);
+        console.log(this.top50List);
       } else {
         // Si no se puede determinar la ubicación del usuario, obtener la lista global
         this.top50List = await this.spotifyService.buscarListasExitosUbi();
@@ -80,13 +84,13 @@ export class Top50ubiComponent implements OnInit {
   }
 
   // Supongamos que tienes una función para obtener las coordenadas de los países
-  async getCountryCoordinates(): Promise<{ [key: string]: [number, number] }> {
+  async getCountryCoordinates(): Promise<{ [codigo_pais: string]: [number, number] }> {
    
     return {
       'US': [37.09024, -95.712891], // Estados Unidos
       'UK': [55.378051, -3.435973], // Reino Unido
       'ES': [36.7213, 4.4215],  // España
-      'FR': [46.603354, 1.888334],
+      'FR': [50.9855, 2.1322],
       'BR': [-14.235004, -51.92528],
       'DE': [51.165691, 10.451526],
       'IT': [42.960175, 12.632208],
@@ -113,5 +117,10 @@ export class Top50ubiComponent implements OnInit {
   // Convierte grados a radianes
   degreesToRadians(degrees: number): number {
     return degrees * Math.PI / 180;
+  }
+
+  irALista(playlistId: string) {
+    this.playlistService.setPlaylistId(playlistId);
+    this.router.navigateByUrl(`inicio/lista/playlist/${playlistId}`);
   }
 }

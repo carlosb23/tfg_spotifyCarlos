@@ -19,15 +19,20 @@ export class ReproductorService {
   async obtenermusicaActual() {
     clearTimeout(this.timerId);
 
-    //obtener musica
+    // Obtener la música actual de Spotify
     const musica = await this.spotifyService.obtenerMusicaAtual();
-    this.definirmusicaActual(musica);
+    
+    // Verificar si la música actual ha cambiado
+    if (this.musicaActual.value.id !== musica.id) {
+        // Actualizar la música actual solo si ha cambiado
+        this.definirmusicaActual(musica);
+    }
 
-    //obtener musica cada 3
-    this.timerId = setInterval(async () => {
-      await this.obtenermusicaActual();
+    // Volver a iniciar el temporizador
+    this.timerId = setTimeout(async () => {
+        await this.obtenermusicaActual();
     }, 3000);
-  }
+}
 
   definirmusicaActual(musica : IMusica) {
     this.musicaActual.next(musica);
@@ -45,6 +50,18 @@ export class ReproductorService {
     await this.spotifyService.pausarMusica();
   }
 
+  async reanudarMusica() {
+    await this.spotifyService.reanudarMusica();
+  }
+
+  async reproducirDesdeTiempo(tiempo: number) {
+    this.spotifyService.reproducirDesdeTiempo(tiempo);
+  }
+
+  async volumenCambia(volumen: number) {
+    await this.spotifyService.volumenCambia(volumen);
+    
+  }
   
 
 }

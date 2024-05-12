@@ -6,6 +6,7 @@
     <div class="imagenplaylist" [style.background-image]="'url(' + playlist.imagenUrl + ')'">
       <div class="playlist-name">{{ playlist.name }}</div>
       <img [src]="playlist.imagenUrl" alt="Imagen de lista de reproducción">
+      <button class="iralista" (click)="irALista(playlist.id)">Ir a la lista</button>
     </div>
   </div>
 </div>

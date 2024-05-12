@@ -82,7 +82,10 @@ export class HomeComponent implements OnDestroy{
 
   async executeMusica(musica: IMusica) {
     try {
+      // Ejecutar la música en Spotify
       await this.spotifyService.ejecutarMusica(musica.id);
+      
+      // Definir la música actual en el reproductor
       this.reproductorService.definirmusicaActual(musica);
     } catch (error) {
       alert('Contrata premium para esta funcionalidad o pulsa aleatorio');

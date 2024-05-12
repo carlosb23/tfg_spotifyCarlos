@@ -230,6 +230,18 @@ export class SpotifyService {
   async pausarMusica(){
     await this.spotifyApi.pause();
   }
+
+  async reanudarMusica(){
+    await this.spotifyApi.play();
+  }
+
+  async reproducirDesdeTiempo(tiempo: number) {
+    await this.spotifyApi.seek(tiempo);
+  }
+
+  async volumenCambia(volumen: number) {
+    await this.spotifyApi.setVolume(volumen);
+  }
   
 
  

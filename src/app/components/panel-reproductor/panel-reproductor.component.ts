@@ -3,7 +3,7 @@ import { IMusica } from '../../Interfaces/IMusica';
 import { newMusica } from '../../common/spotifyHelper2';
 import { ReproductorService } from '../../../service/reproductor.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCaretSquareRight, faPause, faPlay, faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
+import { faCaretSquareRight, faPause, faPlay, faStepBackward, faStepForward, faVolumeHigh, faVolumeLow, faVolumeMute, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { HomeComponent } from '../../componentes/home/home.component';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,7 @@ import { SpotifyService } from '../../../service/spotify.service';
 @Component({
   selector: 'app-panel-reproductor',
   standalone: true,
-  imports: [FontAwesomeModule, HomeComponent, CommonModule],
+  imports: [FontAwesomeModule, HomeComponent, CommonModule, FormsModule],
   templateUrl: './panel-reproductor.component.html',
   styleUrl: './panel-reproductor.component.css'
 })
@@ -29,6 +29,13 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   botonPausar = faPause;
   iconoAgrandar = faCaretSquareRight;
 
+  //iconos de volumen
+  iconoSilencio = faVolumeMute;
+  iconodownvolume = faVolumeLow;
+  iconovolumeup = faVolumeUp;
+  iconovolumenmid = faVolumeHigh;
+
+
   //Para el contador
 
   contadorTiempo: number = 0;
@@ -36,13 +43,17 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   tiempoReproduccionActual: number = 0;
   intervalId: any;
 
+  volumenActual: number = 50;
+  isMuted: boolean = false;
+  volumenAnterior: number = 50;
+
   reproduciendo: boolean = false;
 
   constructor(private reproductorService: ReproductorService, private spotifyService: SpotifyService) { }
 
   ngOnInit(): void {
     this.obtenermusicasonando();
-
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
   }
 
   ngAfterViewChecked(): void {
@@ -70,6 +81,7 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     clearInterval(this.intervalId);
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
   }
 
   obtenerArtistas(musica: IMusica) {
@@ -89,23 +101,53 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
       }
     }
   }
-  
+
+  handleVisibilityChange(): void {
+    if (document.visibilityState === 'hidden') {
+      // Pausar la actualización de la barra de progreso cuando la página está oculta
+      clearInterval(this.intervalId);
+    } else {
+      // Reanudar la actualización de la barra de progreso cuando la página está visible
+      this.iniciarContadorDeTiempo();
+    }
+  }
+
   iniciarContadorDeTiempo(): void {
-    // Limpiar el intervalo anterior antes de iniciar uno nuevo
     clearInterval(this.intervalId);
     this.reproduciendo = true;
 
-    this.contadorTiempo = 0; // Reiniciar el contador de tiempo
-    this.intervalId = setInterval(() => {
-      if (this.contadorTiempo < this.duracionTotal) {
-        this.contadorTiempo++; // Incrementar el contador de tiempo
-        const progressBar = document.querySelector('.barra-progreso') as HTMLElement;
-        const valor = (this.contadorTiempo / this.duracionTotal) * 100;
-        progressBar.style.setProperty('--range-value', `${valor}%`);
-      } else {
-        clearInterval(this.intervalId); // Detener el intervalo cuando se alcanza la duración total
-      }
-    }, 1000); // Actualizar cada segundo
+    // Verificar si hay una canción seleccionada
+    if (this.musica && this.duracionTotal > 0) {
+      this.contadorTiempo = 0;
+      this.intervalId = setInterval(() => {
+        if (this.reproduciendo) {
+          if (this.contadorTiempo < this.duracionTotal) {
+            this.contadorTiempo++;
+            const progressBar = document.querySelector('.barra-progreso') as HTMLElement;
+            const valor = (this.contadorTiempo / this.duracionTotal) * 100;
+            progressBar.style.setProperty('--range-value', `${valor}%`);
+          } else {
+            clearInterval(this.intervalId);
+            this.detectarFinalCancion();
+          }
+        }
+      }, 1000);
+    }
+  }
+
+  detectarFinalCancion(): void {
+    clearInterval(this.intervalId);
+    const indiceActual = this.musicas.findIndex(musica => musica.id === this.musica.id);
+    let indiceSiguiente = indiceActual + 1;
+
+    // Verificar si llegamos al final de la lista
+    if (indiceSiguiente >= this.musicas.length) {
+      indiceSiguiente = 0; // Volver al principio de la lista
+    }
+
+    const proximaCancion = this.musicas[indiceSiguiente];
+    this.reproductorService.definirmusicaActual(proximaCancion);
+    this.executeMusica(proximaCancion);
   }
 
 
@@ -140,8 +182,82 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
     try {
       await this.spotifyService.ejecutarMusica(musica.id);
       this.reproductorService.definirmusicaActual(musica);
+      this.iniciarContadorDeTiempo();
     } catch (error) {
-      alert('Contrata premium para esta funcionalidad o pulsa aleatorio');
+      alert('Contrata premium para esta funcionalidad/abre spotify https://open.spotify.com/intl-es o pulsa aleatorio');
+    }
+  }
+
+  pausarReproduccion(): void {
+    this.reproduciendo = false;
+    this.reproductorService.pausarMusica();
+  }
+
+  reanudarReproduccion(): void {
+    this.reproduciendo = true;
+    this.reproductorService.reanudarMusica();
+  }
+
+  adelantarBarraProgreso(tiempo: number): void {
+    this.contadorTiempo += tiempo;
+    this.reproducirDesde(this.contadorTiempo);
+  }
+
+  atrasarBarraProgreso(tiempo: number): void {
+    this.contadorTiempo -= tiempo;
+    this.reproducirDesde(this.contadorTiempo);
+  }
+
+  reproducirDesde(tiempo: number): void {
+    this.contadorTiempo = tiempo;
+    this.reproductorService.reproducirDesdeTiempo(tiempo);
+  }
+
+  cambiarVolumen(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const valor = parseInt(target.value, 10);
+    this.volumenActual = valor; // Actualiza el valor del volumen en el componente
+
+    // Actualiza la variable --range-value en el elemento HTML
+    const progressBar = document.querySelector('.barra-volumen') as HTMLElement;
+    const valorPorcentaje = (valor / 100) * progressBar.clientWidth;
+    progressBar.style.setProperty('--range-value', `${valorPorcentaje}px`);
+
+    this.reproductorService.volumenCambia(valor); // Llama a la función para cambiar el volumen en Spotify
+  }
+
+  toggleMute(): void {
+    if (this.isMuted) {
+      // Si ya está en silencio, restauramos el volumen anterior y establecemos el estado de silencio como falso
+      this.volumenActual = this.volumenAnterior;
+      this.isMuted = false;
+    } else {
+      // Guardamos el volumen actual antes de silenciarlo, para poder restaurarlo más tarde
+      this.volumenAnterior = this.volumenActual;
+      // Establecemos el volumen actual a cero para silenciar la música y establecemos el estado de silencio como verdadero
+      this.volumenActual = 0;
+      this.isMuted = true;
+    }
+    // Actualizamos el volumen en el servicio
+    this.reproductorService.volumenCambia(this.volumenActual);
+
+    // Actualizamos el marcado de la barra de volumen
+    const progressBar = document.querySelector('.barra-volumen') as HTMLElement;
+    const valorPorcentaje = this.isMuted ? 0 : (this.volumenActual / 100) * progressBar.clientWidth;
+    progressBar.style.setProperty('--range-value', `${valorPorcentaje}px`);
+  }
+
+  getIconForVolume(volumen: number): any {
+    const volumenMute = 0;
+    const volumenBajo = 40;
+    const volumenMedio = 70;
+
+    if (volumen <= volumenMute) {
+      return this.iconoSilencio;
+    } else if (volumen <= volumenBajo) {
+      return this.iconodownvolume;
+    } else if (volumen <= volumenMedio) {
+      return this.iconovolumeup;
     }
   }
 
