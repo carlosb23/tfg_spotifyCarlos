@@ -86,9 +86,7 @@ export class HomeComponent implements OnDestroy{
       // Ejecutar la música en Spotify
       await this.spotifyService.ejecutarMusica(musica.id);
 
-      this.reproductorService.definirmusicaActual(musica);
-      this.playlistService.actualizarEstadoReproduccion(false);
-      
+      this.reproductorService.definirmusicaActual(musica);   
       // Definir la música actual en el reproductor
       this.reproductorService.definirmusicaActual(musica);
     } catch (error) {

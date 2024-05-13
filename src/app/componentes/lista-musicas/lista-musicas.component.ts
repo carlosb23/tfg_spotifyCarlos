@@ -99,8 +99,6 @@ export class ListaMusicasComponent {
     try {
       await this.spotifyService.ejecutarMusica(musica.id);
       this.reproductorService.definirmusicaActual(musica);
-
-      this.playlistService.actualizarEstadoReproduccion(false);
     } catch (error) {
       alert('Contrata premium para esta funcionalidad/abre spotify https://open.spotify.com/intl-es o pulsa aleatorio');
     }
