@@ -13,7 +13,7 @@ import { PlaylistService } from '../../../service/playlist.service';
 @Component({
   selector: 'app-parte-izquierda',
   standalone: true,
-  imports: [BotonMenuComponent, FontAwesomeModule, CommonModule, ParteUsuarioComponent,Top50ubiComponent],
+  imports: [BotonMenuComponent, FontAwesomeModule, CommonModule, ParteUsuarioComponent, Top50ubiComponent],
   templateUrl: './parte-izquierda.component.html',
   styleUrl: './parte-izquierda.component.css'
 })
@@ -49,26 +49,31 @@ export class ParteIzquierdaComponent implements OnInit {
   }
 
   async initializeUserAndSearchPlaylist() {
-     // Inicializar el usuario
+    // Inicializar el usuario
     const userInitialized = await this.spotifyService.inicializarUsuario();
-     
-     if (userInitialized) {
-       // Si el usuario se inicializa correctamente, buscar las playlists
-       await this.searchPlaylist();
-     } else {
-        
-     }
-   }
- 
+
+    if (userInitialized) {
+      // Si el usuario se inicializa correctamente, buscar las playlists
+      await this.searchPlaylist();
+    } else {
+
+    }
+  }
+
   async searchPlaylist() {
-     try {
-       // Buscar las playlists una vez que el usuario está inicializado
-       this.playlist = await this.spotifyService.buscarListasExitosDeTodosLosPaises();
-       console.log(this.playlist);
-     } catch (error) {
-       console.error('Error al buscar playlists:', error);
-     }
-   }
+    try {
+      // Buscar las playlists una vez que el usuario está inicializado
+      this.playlist = await this.spotifyService.buscarListasExitosDeTodosLosPaises();
+      console.log(this.playlist);
+    } catch (error) {
+      console.error('Error al buscar playlists:', error);
+    }
+  }
+
+  buscarclick(boton: string) {
+    this.menuSelected = boton;
+    this.router.navigateByUrl('inicio/buscar');
+  }
 
   botonClick(boton: string) {
     this.menuSelected = boton;
@@ -80,4 +85,5 @@ export class ParteIzquierdaComponent implements OnInit {
     this.router.navigateByUrl(`inicio/lista/playlist/${playlistId}`);
   }
 
+  
 }

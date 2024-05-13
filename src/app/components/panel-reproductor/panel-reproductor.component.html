@@ -1,4 +1,4 @@
-<div class="reproductor">
+<div class="reproductor" *ngIf="reproduciendo">
     <img [src]="musica.album.imagenUrl" class="album-image">
     <div class="info">
         <p class="titulo">{{ musica.titulo }}</p>
@@ -20,10 +20,10 @@
 
     </div>
 
-    <fa-icon class="agrandar" [icon]="iconoAgrandar" ></fa-icon>
+    <fa-icon class="agrandar" [icon]="iconoAgrandar" [ngClass]="{'agrandar': vistaSonando, 'agrandarno': !vistaSonando}" (click)="toggleVistaSonando()"></fa-icon>
 
     <div class="div-volumen" (input)="cambiarVolumen($event)">
-        <fa-icon [icon]="getIconForVolume(volumenActual)" (click)="toggleMute()"></fa-icon>
+        <fa-icon [icon]="getIconForVolume(volumenActual)" (click)="toggleMute()"><span class="punto">.</span></fa-icon>
         <input type="range" class="barra-volumen" min="0" max="100" [(ngModel)]="volumenActual" />
     </div>
 </div>

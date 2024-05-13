@@ -15,7 +15,7 @@ export class PanelDerechoComponent {
 
   vistaSonandoHabilitada = false;
   
-  constructor(private reproductorService: ReproductorService) { }
+  constructor(public reproductorService: ReproductorService) { }
 
   ngOnInit(): void {
     

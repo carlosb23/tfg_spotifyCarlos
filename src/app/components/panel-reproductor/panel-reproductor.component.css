@@ -162,14 +162,28 @@
 }
 
 .agrandar {
-    font-size: 15px !important;
-    border: 1px solid black !important;
+    font-size: 11px !important;
+    color: #23a03e !important;
+    border: 2px solid #23a03e !important;
     border-radius: 15% !important;
     padding: 5px !important;
     position: relative !important;
-    right: 24% !important;
+    right: 22% !important;
     cursor: pointer;
 }
+
+.agrandarno{
+    font-size: 11px !important;
+    border: 2px solid black !important;
+    border-radius: 15% !important;
+    padding: 5px !important;
+    position: relative !important;
+    right: 22% !important;
+    cursor: pointer;
+}
+
+
+
 
 /*Volumen*/
 

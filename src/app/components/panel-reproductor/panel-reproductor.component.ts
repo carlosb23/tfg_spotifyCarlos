@@ -52,6 +52,7 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   volumenAnterior: number = 30;
 
   reproduciendo: boolean = false;
+  vistaSonando: boolean = false;
 
   constructor(private reproductorService: ReproductorService, private spotifyService: SpotifyService) { }
 
@@ -64,7 +65,12 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
     this.verificarAnchoTexto();
   }
 
+  toggleVistaSonando(): void {
+    this.reproductorService.cambiarEstadoVistaSonando();
+    this.vistaSonando = !this.vistaSonando;
+  }
 
+  
 
   convertirTiempoASegundos(tiempo: string): number {
     const partes = tiempo.split(':');

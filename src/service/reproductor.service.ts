@@ -13,8 +13,13 @@ export class ReproductorService {
   musicaActual = new BehaviorSubject<IMusica>(newMusica());
   timerId: any = null;
 
+  vistaSonando: boolean = false;
 
   constructor(private spotifyService: SpotifyService) { }
+
+  cambiarEstadoVistaSonando(): void {
+    this.vistaSonando = !this.vistaSonando;
+  }
 
 
   async obtenermusicaActual() {
