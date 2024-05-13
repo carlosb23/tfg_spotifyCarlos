@@ -3,7 +3,7 @@
     
     <app-top50ubi class="topubi"></app-top50ubi>
 
-    <span class="musica-title">Top favoritas de {{usuario?.name}} <!--<button (click)="reproducirCancionAleatoriaGustada()">Aleatoria</button>--></span>
+    <span class="musica-title">Top favoritas de {{usuario?.name}} <button (click)="reproducirCancionAleatoriaGustada()">Aleatoria</button></span>
     
     
 
@@ -35,7 +35,7 @@
             </tbody>
             
         </table>
-        <app-panel-reproductor [musicas]="musicas" class="panel-reproductor"></app-panel-reproductor>
+        <app-panel-reproductor   [musicas]="musicas" class="panel-reproductor"></app-panel-reproductor>
     </div>
 </div>
 

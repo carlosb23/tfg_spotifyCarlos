@@ -67,7 +67,7 @@ export class SpotifyService {
   obtenerUrlLogin() {
     let urlbase = 'https://accounts.spotify.com/authorize?';
     const clientId = 'client_id=' + '910ce5a3c01a467f9c6454ba844cddc6' + '&'; // Codigo de cliente id de spotify
-    const redirectUri = '&redirect_uri=' + 'http://localhost:4200/login/'; // Direccion de redireccionamiento una vez que el usuario inicia sesion
+    const redirectUri = '&redirect_uri=' + 'https://tfgspotifycarlos.netlify.app/login'; // Direccion de redireccionamiento una vez que el usuario inicia sesion
     const scope = '&scope=' + 'user-read-currently-playing user-modify-playback-state user-read-recently-played user-read-private user-library-read playlist-read-private playlist-modify-public playlist-modify-private'; // Permisos de acceso
     const response_type = '&response_type=token&show_dialog=true&';
 
@@ -144,6 +144,7 @@ export class SpotifyService {
   
     //IDs de las listas de reproducción para cada país
     const playlistIds: PlaylistIds = {
+      'global': '37i9dQZEVXbMDoHDwVN2tF',
       'US': '37i9dQZEVXbLRQDuF5jeBp', // Estados Unidos
       'UK': '37i9dQZEVXbLnolsZ8PSNw', // Reino Unido
       'ES': '37i9dQZEVXbNFJfN1Vw8d9', // España
@@ -153,8 +154,7 @@ export class SpotifyService {
       'IT': '37i9dQZEVXbIQnj7RRhdSX', // Italia
       'JP': '37i9dQZEVXbKXQ4mDTEBXq', // Japón
       'AU': '37i9dQZEVXbJPcfkRz0wJ0',  // Australia
-      'BE': '37i9dQZEVXbJNSeeHswcKB',  // Belgica
-      'global': '37i9dQZEVXbMDoHDwVN2tF'
+      'BE': '37i9dQZEVXbJNSeeHswcKB'  // Belgica
     };
   
     const playlistsPromises = paises.map(async (pais) => {
@@ -195,7 +195,7 @@ export class SpotifyService {
     
   }
 
-  /*async obtenerCancionesGustadasAleatorias(): Promise<IMusica[]> {
+  async obtenerCancionesGustadasAleatorias(): Promise<IMusica[]> {
     try {
       // Obtener las canciones guardadas del usuario
       const cancionesGuardadas = await this.spotifyApi.getMySavedTracks();
@@ -214,7 +214,7 @@ export class SpotifyService {
       console.error('Error al obtener canciones gustadas aleatorias:', error);
       throw error;
     }
-  }*/
+  }
 
   //ejecutar la musica
 
@@ -283,6 +283,7 @@ export class SpotifyService {
   async buscarListasExitosDePais(country: string): Promise<IPlaylist[]> {
     // Lógica para obtener la lista de reproducción del país especificado
     const playlistIds: { [key: string]: string } = {
+      'global': '37i9dQZEVXbMDoHDwVN2tF',
       'US': '37i9dQZEVXbLRQDuF5jeBp', // Estados Unidos
       'UK': '37i9dQZEVXbLnolsZ8PSNw', // Reino Unido
       'ES': '37i9dQZEVXbNFJfN1Vw8d9', // España
@@ -292,8 +293,7 @@ export class SpotifyService {
       'IT': '37i9dQZEVXbIQnj7RRhdSX', // Italia
       'JP': '37i9dQZEVXbKXQ4mDTEBXq', // Japón
       'AU': '37i9dQZEVXbJPcfkRz0wJ0', // Australia
-      'BE': '37i9dQZEVXbJNSeeHswcKB', // Belgica
-      'global': '37i9dQZEVXbMDoHDwVN2tF' // Lista global
+      'BE': '37i9dQZEVXbJNSeeHswcKB' // Belgica
     };
 
     const playlistId = playlistIds[country];

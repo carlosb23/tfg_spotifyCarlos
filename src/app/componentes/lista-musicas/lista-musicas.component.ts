@@ -11,6 +11,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReproductorService } from '../../../service/reproductor.service';
 import { CommonModule } from '@angular/common';
 import { PanelReproductorComponent } from '../../components/panel-reproductor/panel-reproductor.component';
+import { PlaylistService } from '../../../service/playlist.service';
 
 @Component({
   selector: 'app-lista-musicas',
@@ -33,7 +34,7 @@ export class ListaMusicasComponent {
   subs: Subscription[] = []
   isScrolled = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private spotifyService: SpotifyService,private reproductorService: ReproductorService) { }
+  constructor(private activatedRoute: ActivatedRoute, private spotifyService: SpotifyService,private reproductorService: ReproductorService, private playlistService: PlaylistService) { }
 
   ngOnInit(): void {
     this.obtenerMusicas();
@@ -98,6 +99,8 @@ export class ListaMusicasComponent {
     try {
       await this.spotifyService.ejecutarMusica(musica.id);
       this.reproductorService.definirmusicaActual(musica);
+
+      this.playlistService.actualizarEstadoReproduccion(false);
     } catch (error) {
       alert('Contrata premium para esta funcionalidad/abre spotify https://open.spotify.com/intl-es o pulsa aleatorio');
     }

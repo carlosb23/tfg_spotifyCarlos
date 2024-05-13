@@ -16,6 +16,7 @@ import { BuscadorRecientesComponent } from '../../components/buscador-recientes/
 import { PanelReproductorComponent } from '../../components/panel-reproductor/panel-reproductor.component';
 import { ListaMusicasComponent } from '../lista-musicas/lista-musicas.component';
 import { BannerplaylistComponent } from '../../components/bannerplaylist/bannerplaylist.component';
+import { PlaylistService } from '../../../service/playlist.service';
 
 
 @Component({
@@ -37,11 +38,11 @@ export class HomeComponent implements OnDestroy{
   playIcon = faPlay
 
 
-
   constructor(
     private spotifyService: SpotifyService,
     private snackBar: MatSnackBar,
-    private reproductorService: ReproductorService
+    private reproductorService: ReproductorService,
+    private playlistService: PlaylistService
   ) { }
 
   ngOnInit(): void {
@@ -84,6 +85,9 @@ export class HomeComponent implements OnDestroy{
     try {
       // Ejecutar la música en Spotify
       await this.spotifyService.ejecutarMusica(musica.id);
+
+      this.reproductorService.definirmusicaActual(musica);
+      this.playlistService.actualizarEstadoReproduccion(false);
       
       // Definir la música actual en el reproductor
       this.reproductorService.definirmusicaActual(musica);
@@ -92,7 +96,7 @@ export class HomeComponent implements OnDestroy{
     }
   }
 
- /* async reproducirCancionAleatoriaGustada() {
+ async reproducirCancionAleatoriaGustada() {
     try {
       // Obtener todas las canciones con vista previa
       const musicas = await this.spotifyService.obtenerCancionesGustadasAleatorias();
@@ -111,7 +115,7 @@ export class HomeComponent implements OnDestroy{
     } catch (error) {
       console.error('Error al reproducir canción aleatoria gustada:', error);
     }
-  }*/
+  }
   private mostrarSnackBar(mensaje: string) {
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 4000 

@@ -58,7 +58,6 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.obtenermusicasonando();
-  document.addEventListener('visibilitychange', () => this.handleVisibilityChange());
   }
 
   ngAfterViewChecked(): void {
@@ -95,7 +94,6 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
     clearInterval(this.intervalId);
     if (typeof document !== 'undefined') {
       clearInterval(this.intervalId);
-      document.removeEventListener('visibilitychange', this.handleVisibilityChange);
     }
   }
 
@@ -120,17 +118,10 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   }
 
   handleVisibilityChange(): void {
-    if (document.visibilityState === 'hidden') {
-      // Pausar la actualización de la barra de progreso cuando la página está oculta
-      clearInterval(this.intervalId);
-    } else {
-      // Reanudar la actualización de la barra de progreso cuando la página está visible
-      this.iniciarContadorDeTiempo();
-    }
+    
   }
 
   iniciarContadorDeTiempo(): void {
-    clearInterval(this.intervalId);
     this.reproduciendo = true;
 
     // Verificar si hay una canción seleccionada

@@ -3,6 +3,8 @@ import { ParteIzquierdaComponent } from '../../components/parte-izquierda/parte-
 import { RouterOutlet } from '@angular/router';
 import { Top50ubiComponent } from '../../components/top50ubi/top50ubi.component';
 
+
+
 @Component({
   selector: 'app-inicio',
   standalone: true,

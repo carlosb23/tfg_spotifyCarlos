@@ -37,7 +37,7 @@ export class ReproductorService {
     // Volver a iniciar el temporizador
     this.timerId = setTimeout(async () => {
         await this.obtenermusicaActual();
-    }, 3000);
+    });
 }
 
   definirmusicaActual(musica : IMusica) {

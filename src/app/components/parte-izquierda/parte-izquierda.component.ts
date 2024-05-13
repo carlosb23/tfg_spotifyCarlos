@@ -85,5 +85,11 @@ export class ParteIzquierdaComponent implements OnInit {
     this.router.navigateByUrl(`inicio/lista/playlist/${playlistId}`);
   }
 
+  globallista(boton: string) {
+    this.menuSelected = boton;
+    this.router.navigateByUrl('inicio/lista/playlist/37i9dQZEVXbMDoHDwVN2tF');
+    
+  }
+
   
 }
