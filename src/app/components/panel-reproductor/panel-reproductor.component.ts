@@ -44,7 +44,6 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
 
   contadorTiempo: number = 0;
   duracionTotal: number = 0;
-  tiempoReproduccionActual: number = 0;
   intervalId: any;
 
   volumenActual: number = 30;
@@ -122,6 +121,7 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   }
 
   iniciarContadorDeTiempo(): void {
+    clearInterval(this.intervalId);
     this.reproduciendo = true;
 
     // Verificar si hay una canción seleccionada
