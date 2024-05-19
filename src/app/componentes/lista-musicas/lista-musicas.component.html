@@ -6,12 +6,12 @@
         <table class="tablemusic">
             <thead>
                 <tr>
-                    <th class="w-5">Play</th>
+                    <th class="w-5 w-10movile">Play</th>
                     <th class="w-5"></th>
                     <th class="w-35">Titulo</th>
                     <th class="w-30">Artista</th>
-                    <th class="w-10 directa">Tiempo</th>
-                    <th class="w-20">Album</th>
+                    <th class="w-10 directa no">Tiempo</th>
+                    <th class="w-20 no">Album</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,8 +23,8 @@
                     <td><img [src]="musica.album.imagenUrl" alt="Imagen album"></td>
                     <td>{{musica.titulo}}</td>
                     <td>{{obtenerArtistas(musica)}}</td>
-                    <td class="directa">{{musica.tiempo}}</td>
-                    <td>{{musica.album.name}}</td>
+                    <td class="directa no">{{musica.tiempo}}</td>
+                    <td class="no">{{musica.album.name}}</td>
                 </tr>
 
             </tbody>

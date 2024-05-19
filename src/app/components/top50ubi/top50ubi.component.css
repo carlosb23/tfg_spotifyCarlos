@@ -54,3 +54,71 @@ img{
     text-shadow: 2px 2px 10px whitesmoke;
 
 }
+
+
+@media screen and (max-width: 600px) {
+    .card{
+        position: relative;
+        height: 200px;
+    }
+
+    .nomovile{
+        display: none;
+    }
+    
+    .playlist-name{
+        color: white;
+        font-weight: 700;
+        font-size: 2.2rem;
+        margin-top: 8vh;
+        padding-left: 29vh;
+    }
+    .span-titulo-bg{
+        color: #000;
+        text-shadow: 2px 2px 10px whitesmoke;
+    }
+    
+    img{
+        border-radius: 4%;
+        position: relative;
+        right: -1%;
+        width: 14%;
+        top: -63%;
+        margin: 2%;
+        box-shadow: 0 4px 60px rgba(0, 0, 0, .5);
+    }
+    
+    .imagenplaylist{    
+        height: 103%;
+        background-size: cover;
+        background-position: center;
+        width: 94%;
+        background-repeat: no-repeat;
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+    }
+    
+    .iralista{
+        position: fixed;
+        border: none;
+        color: white;
+        font-size: 25px;
+        left: 65.5%;
+        top: 37%;
+        background-color: transparent;
+        cursor: pointer;
+        font-style: italic;
+        text-decoration: underline;
+    }
+    
+    .iralista:hover{
+        text-decoration: underline;
+        font-size: 27px;
+        transition: 0.5s;
+        text-shadow: 2px 2px 10px whitesmoke;
+    
+    }
+    
+}
