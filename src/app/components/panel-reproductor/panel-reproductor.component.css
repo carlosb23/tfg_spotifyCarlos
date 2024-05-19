@@ -8,14 +8,14 @@
 }
 .reproductor {
     display: flex;
-    padding: 8px 30px;
+    padding: 6px 14px;
     align-items: center;
     width: 100%;
     height: 76%;
 }
 
 .album-image {
-    width: 50px; 
+    width: 46px; 
     margin-right: 10px; 
 }
 
@@ -241,14 +241,14 @@
         display: inline-block;
     }
     .botones{
-        position: relative;
-        right: 131%;
-        top: -19%;
+        position: absolute;
+        right: 57%;
+        top: -24px;
     }
     
     .play{
         /*circulo de fondo*/
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: transparent;
         border-radius: 50%; 
         padding: 11px;
         color: #23a03e;
@@ -257,11 +257,6 @@
         display: inline-block;
     }
     
-    .play:hover{
-        color: #72e48a;
-        cursor: pointer;
-        transform: scale(1.1);
-    }
     
     .botones-y-barra{
         display: flex;
@@ -270,9 +265,11 @@
         flex-direction: column;
         right: -15%;
     }
+
     .botones fa-icon {
         margin-left: 45px; /* Ajusta el espaciado entre los iconos */
-        font-size: 18px;
+        font-size: 21px;
+
     }
     
     .barra-progreso {

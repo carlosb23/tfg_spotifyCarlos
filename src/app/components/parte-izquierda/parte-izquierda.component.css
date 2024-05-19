@@ -125,7 +125,7 @@
         /* Espacio entre los botones */
         align-items: center;
         /* Centra los elementos verticalmente */
-        padding: 0px;
+        padding: 2px;
         /* Ajusta el padding para los botones */
     }
 
