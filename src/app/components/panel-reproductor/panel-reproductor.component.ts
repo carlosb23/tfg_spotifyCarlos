@@ -60,7 +60,9 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewChecked(): void {
-    this.verificarAnchoTexto();
+    if (typeof document !== 'undefined') {
+      this.verificarAnchoTexto();
+    }
   }
 
   toggleVistaSonando(): void {
@@ -101,17 +103,19 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
   }
 
   verificarAnchoTexto() {
-    const artistasContainer = document.querySelector('.artistas-container');
-    const artistas = document.querySelector('.artistas');
-  
-    if (artistas && artistasContainer) {
-      const artistasWidth = artistas.getBoundingClientRect().width;
-      const containerWidth = artistasContainer.getBoundingClientRect().width;
-  
-      if (artistasWidth > containerWidth) {
-        artistas.classList.add('anima');
-      } else {
-        artistas.classList.remove('anima'); // Remover la clase si ya no es necesaria
+    if (typeof document !== 'undefined') {
+      const artistasContainer = document.querySelector('.artistas-container');
+      const artistas = document.querySelector('.artistas');
+
+      if (artistas && artistasContainer) {
+        const artistasWidth = artistas.getBoundingClientRect().width;
+        const containerWidth = artistasContainer.getBoundingClientRect().width;
+
+        if (artistasWidth > containerWidth) {
+          artistas.classList.add('anima');
+        } else {
+          artistas.classList.remove('anima');
+        }
       }
     }
   }
@@ -120,20 +124,20 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
     
   }
 
-  iniciarContadorDeTiempo(): void {
-    clearInterval(this.intervalId);
+  iniciarContadorDeTiempo(): void { clearInterval(this.intervalId);
     this.reproduciendo = true;
 
-    // Verificar si hay una canción seleccionada
     if (this.musica && this.duracionTotal > 0) {
       this.contadorTiempo = 0;
       this.intervalId = setInterval(() => {
         if (this.reproduciendo) {
           if (this.contadorTiempo < this.duracionTotal) {
             this.contadorTiempo++;
-            const progressBar = document.querySelector('.barra-progreso') as HTMLElement;
-            const valor = (this.contadorTiempo / this.duracionTotal) * 100;
-            progressBar.style.setProperty('--range-value', `${valor}%`);
+            if (typeof document !== 'undefined') {
+              const progressBar = document.querySelector('.barra-progreso') as HTMLElement;
+              const valor = (this.contadorTiempo / this.duracionTotal) * 100;
+              progressBar.style.setProperty('--range-value', `${valor}%`);
+            }
           } else {
             clearInterval(this.intervalId);
             this.detectarFinalCancion();
@@ -237,23 +241,20 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
 
   toggleMute(): void {
     if (this.isMuted) {
-      // Si ya está en silencio, restauramos el volumen anterior y establecemos el estado de silencio como falso
       this.volumenActual = this.volumenAnterior;
       this.isMuted = false;
     } else {
-      // Guardamos el volumen actual antes de silenciarlo, para poder restaurarlo más tarde
       this.volumenAnterior = this.volumenActual;
-      // Establecemos el volumen actual a cero para silenciar la música y establecemos el estado de silencio como verdadero
       this.volumenActual = 0;
       this.isMuted = true;
     }
-    // Actualizamos el volumen en el servicio
     this.reproductorService.volumenCambia(this.volumenActual);
 
-    // Actualizamos el marcado de la barra de volumen
-    const progressBar = document.querySelector('.barra-volumen') as HTMLElement;
-    const valorPorcentaje = this.isMuted ? 0 : (this.volumenActual / 100) * progressBar.clientWidth;
-    progressBar.style.setProperty('--range-value', `${valorPorcentaje}px`);
+    if (typeof document !== 'undefined') {
+      const progressBar = document.querySelector('.barra-volumen') as HTMLElement;
+      const valorPorcentaje = this.isMuted ? 0 : (this.volumenActual / 100) * progressBar.clientWidth;
+      progressBar.style.setProperty('--range-value', `${valorPorcentaje}px`);
+    }
   }
 
   getIconForVolume(volumen: number): any {
