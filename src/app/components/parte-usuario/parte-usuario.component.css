@@ -37,7 +37,10 @@ span{
     }
 
     .icono{
-        display: none;
+        display: flex;
+        position: relative;
+        right: 27px;
+        color: transparent;
     }
 
     div{

@@ -218,6 +218,9 @@
 
 @media screen and (max-width: 600px) {
 
+    :host{
+        z-index: 1;
+    }
     .nomovile{
         display: none;
     }

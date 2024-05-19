@@ -5,7 +5,7 @@
 </div>
 
 <div class="movil flex" *ngIf="usuario" (click)="logout()">
-    <img [src]="usuario?.imagenUrl" alt="">
+    <img  [src]="usuario?.imagenUrl" alt="" >
     <span>{{usuario.name}}</span>
     <fa-icon class="icono" [icon]="salirIcono"></fa-icon>
 </div>

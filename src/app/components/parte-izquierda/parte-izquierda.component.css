@@ -95,6 +95,7 @@
         box-shadow: none;
         max-height: 100vh;
         max-width: 537px;
+        width: 11000vh;
         overflow-y: hidden;
         display: flex;
         flex-direction: column;
@@ -124,7 +125,7 @@
         /* Espacio entre los botones */
         align-items: center;
         /* Centra los elementos verticalmente */
-        padding: 10px;
+        padding: 0px;
         /* Ajusta el padding para los botones */
     }
 
@@ -140,13 +141,13 @@
         flex-direction: column;
         height: 100%;
         padding: 0px 40px 0px 40px;
-        height: 1vh;
+        height: 0vh;
 
     }
 
     .imagen-spoti-cointainer img {
         width: 30%;
-        margin-top: 32px;
+        margin-top: 23px;
         margin-bottom: 25px;
         margin-left: auto;
         margin-left: 73%;
