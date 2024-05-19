@@ -1,15 +1,15 @@
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import Spotify from 'spotify-web-api-js';
 import { IUsuario } from '../app/Interfaces/IUsuario';
 import { SpotifyPlaylistParaPlaylist, SpotifyTrackParaMusica, SpotifyUserParaUsuario } from '../app/common/spotifyHelper';
 import { IPlaylist } from '../app/Interfaces/IPlaylist';
-import { Console } from 'console';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IMusica } from '../app/Interfaces/IMusica';
 import { IArtista } from '../app/Interfaces/IArtista';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +22,10 @@ export class SpotifyService {
   private usuarioSubject = new BehaviorSubject<IUsuario>(null);
   usuarioObservable = this.usuarioSubject.asObservable();
 
-  constructor(private router: Router,private http: HttpClient) {
-    this.spotifyApi = new Spotify();
+  constructor(private router: Router, private http: HttpClient, @Inject(PLATFORM_ID) private platformId: any) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.spotifyApi = new Spotify();
+    }
   }
 
   async inicializarUsuario() {
