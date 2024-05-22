@@ -8,17 +8,17 @@ export const auth: CanActivateFn = () => {
   const spotifyService = inject(SpotifyService);
 
   const Usuarionoreconocido = () => {
-    // Verificar si localStorage está disponible
-    if (typeof localStorage !== 'undefined') {
-      localStorage.clear();
+    // Verificar si sessionStorage está disponible
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.clear();
     }
     router.navigate(['/login']);
     return false;
   }
 
-  // Verificar si localStorage está disponible
-  if (typeof localStorage !== 'undefined') {
-    const token = localStorage.getItem('token');
+  // Verificar si sessionStorage está disponible
+  if (typeof sessionStorage !== 'undefined') {
+    const token = sessionStorage.getItem('token');
     if (!token) {
       return Usuarionoreconocido();
     }

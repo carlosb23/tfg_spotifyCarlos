@@ -1,0 +1,113 @@
+:host {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+input {
+    width: 27%;
+    padding: 10px 5px;
+    border-radius: 25px;
+    border-color: #3d3d3d3f;
+    outline: none;
+    color: #23a03e;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+input::placeholder {
+    color: #00000033;
+    font-size: .85rem;
+}
+
+input:focus {
+    border-color: #23a03e;
+    border-width: 2px;
+}
+
+input:active {
+    border-color: #23a03e;
+    border-width: 2px;
+}
+
+.sugerencias {
+    flex-wrap: wrap;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+span {
+    background-color: white;
+    margin-right: 5px;
+    padding: 5px 10px;
+    color: #000000b3;
+    border: 1px solid #00000033;
+    margin-top: 10px;
+    font-size: .9rem;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+span:hover {
+    background-color: rgba(35, 160, 62, 0.8);
+    color: white;
+}
+
+.playlisimagen {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.playlisimagen app-cajas-listas {
+    transition: transform 0.2s ease-in-out;
+}
+
+.playlisimagen app-cajas-listas:hover {
+    transform: scale(1.05);
+}
+
+@media screen and (max-width: 600px) {
+    :host {
+        position: fixed;
+        top: 9%;
+        left: 1%;
+    }
+
+    input {
+        width: 87%;
+        padding: 10px 5px;
+        border-radius: 25px;
+        border-color: #3d3d3d3f;
+        outline: none;
+        color: #23a03e;
+        font-size: 1rem;
+        font-weight: 500;
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+
+    .playlisimagen {
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 10px;
+        width: 100%;
+        height: 55vh;
+        max-height: calc(95vh - 200px);
+        margin-top: 4px;
+    }
+
+    .playlisimagen app-cajas-listas {
+        flex: 0 0 auto;
+        width: 160px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .playlisimagen app-cajas-listas:hover {
+        transform: scale(1.05);
+    }
+}

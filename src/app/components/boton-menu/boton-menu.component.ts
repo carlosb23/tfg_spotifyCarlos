@@ -13,6 +13,7 @@ export class BotonMenuComponent {
   
   @Input()
   descripcion = ''
+  imgUrl = ''
 
   @Input()
   selected = false

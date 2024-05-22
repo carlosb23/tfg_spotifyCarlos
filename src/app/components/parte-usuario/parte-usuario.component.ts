@@ -45,5 +45,6 @@ export class ParteUsuarioComponent implements OnInit,OnDestroy  {
 
   logout() {
     this.spotifyService.logout();
+    this.spotifyService.pausarMusica();
   }
 }

@@ -1,5 +1,40 @@
 # TfgSpotifyCarlos
 
+Descripción corta de tu aplicación.
+
+## Tabla de Contenidos
+
+- [Requisitos Previos](#requisitos-previos)
+- [Instalación](#instalación)
+- [Uso](#uso)
+- [Contribuir](#contribuir)
+- [Licencia](#licencia)
+
+## Requisitos Previos
+
+- Node.js y npm instalados en tu sistema.
+- Cuenta de Spotify para obtener credenciales de API.
+
+## Instalación
+
+1. Clona este repositorio en tu máquina local.
+2. Abre una terminal en la carpeta del proyecto.
+3. Ejecuta el comando `npm install` para instalar las dependencias.
+4. Crea una aplicación en [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications) para obtener las credenciales de la API.
+5. Copia las credenciales de cliente y el URI de redireccionamiento en el archivo de configuración `environment.ts`.
+
+## Uso
+
+1. Ejecuta el comando `ng serve` para iniciar el servidor de desarrollo.
+2. Abre tu navegador y navega a `http://localhost:4200`.
+3. Inicia sesión con tu cuenta de Spotify.
+4. Disfruta de las características de la aplicación.
+
+
+## Licencia
+
+Este proyecto está bajo la Licencia [MIT](https://opensource.org/licenses/MIT).
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.
 
 ## Development server

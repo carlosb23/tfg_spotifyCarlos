@@ -29,11 +29,11 @@ export class SpotifyService {
     if (!!this.usuario)
       return true;
 
-    if (typeof localStorage === 'undefined') {
+    if (typeof sessionStorage === 'undefined') {
       return false;
     }
 
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
     if (!token)
       return false;
@@ -94,7 +94,7 @@ export class SpotifyService {
 
   definirAccessToken(token: string) {
     this.spotifyApi.setAccessToken(token);
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
   }
 
   //En caso de caducar el token
@@ -179,8 +179,8 @@ export class SpotifyService {
 
 
   logout() {
-    localStorage.clear();
-    localStorage.removeItem('token');
+    sessionStorage.clear();
+    sessionStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 

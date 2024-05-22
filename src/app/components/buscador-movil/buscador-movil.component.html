@@ -1,0 +1,9 @@
+<input type="text" (keyup.enter)="buscar()" [(ngModel)]="buscador" placeholder="¿Que te apatece escuchar?">
+<div class="sugerencias flex">
+    <span (click)="definirbuscador(busqueda)" *ngFor="let busqueda of buscarRecientes"><fa-icon [icon]=" searchicon"></fa-icon>{{busqueda}}</span>
+</div>
+
+<div class="playlisimagen">
+    <app-cajas-listas *ngFor="let playlistItem of playlist" [descripcion]="playlistItem.name" [imagenUrl]="playlistItem.imagenUrl"
+    (click)="irPlaylist(playlistItem.id)"></app-cajas-listas>
+</div>

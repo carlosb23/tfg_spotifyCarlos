@@ -1,0 +1,5 @@
+<button type="button" (click)="onClick()" [class.selected]="selected">
+    <ng-content></ng-content>
+    <div class="imagen" [style.background-image]="'url(' + imagenUrl + ')'"></div>
+    <span>{{descripcion}}</span>
+</button>
