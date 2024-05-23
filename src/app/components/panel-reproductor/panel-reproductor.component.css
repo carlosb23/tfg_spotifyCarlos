@@ -232,7 +232,7 @@
         flex-grow: 1; 
     }
     .artistas-container {
-        max-width: 100px; 
+        max-width: 150px; 
         white-space: nowrap;
         overflow: hidden;
     }

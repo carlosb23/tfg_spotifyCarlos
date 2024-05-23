@@ -63,6 +63,15 @@ span:hover {
     margin-top: 30px;
 }
 
+.playlisimagen::-webkit-scrollbar {
+    width: 7px;
+ }
+ 
+.playlisimagen::-webkit-scrollbar-thumb {
+    background-color: rgba(35, 160, 62, .6);
+    border-radius: 10px; 
+}
+
 .playlisimagen app-cajas-listas {
     transition: transform 0.2s ease-in-out;
 }

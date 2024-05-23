@@ -12,6 +12,8 @@ export class ReproductorService {
   
   musicaActual = new BehaviorSubject<IMusica>(newMusica());
   timerId: any = null;
+  contadorTiempo = new BehaviorSubject<number>(0);
+  reproduciendo = new BehaviorSubject<boolean>(false);
 
   vistaSonando: boolean = false;
 
@@ -25,48 +27,49 @@ export class ReproductorService {
   async obtenermusicaActual() {
     clearTimeout(this.timerId);
 
-    // Obtener la música actual de Spotify
     const musica = await this.spotifyService.obtenerMusicaAtual();
     
-    // Verificar si la música actual ha cambiado
     if (this.musicaActual.value.id !== musica.id) {
-        // Actualizar la música actual solo si ha cambiado
-        this.definirmusicaActual(musica);
+      this.definirmusicaActual(musica);
     }
 
-    // Volver a iniciar el temporizador
     this.timerId = setTimeout(async () => {
-        await this.obtenermusicaActual();
-    });
-}
+      await this.obtenermusicaActual();
+    }, 1000);
+  }
 
-  definirmusicaActual(musica : IMusica) {
+  definirmusicaActual(musica: IMusica) {
     this.musicaActual.next(musica);
+    this.contadorTiempo.next(0);
+    this.reproduciendo.next(true);
   }
 
-  async cancionAnterior() {
-    await this.spotifyService.obtenerMusicaAnterior();
+  actualizarContadorTiempo(tiempo: number) {
+    this.contadorTiempo.next(tiempo);
   }
 
-  async proximaCancion() {
-    await this.spotifyService.obtenerMusicaSeguiente();
+  cambiarEstadoReproduccion(estado: boolean) {
+    this.reproduciendo.next(estado);
   }
 
+  // Métodos de control de reproducción
   async pausarMusica() {
     await this.spotifyService.pausarMusica();
+    this.cambiarEstadoReproduccion(false);
   }
 
   async reanudarMusica() {
     await this.spotifyService.reanudarMusica();
+    this.cambiarEstadoReproduccion(true);
   }
 
   async reproducirDesdeTiempo(tiempo: number) {
     this.spotifyService.reproducirDesdeTiempo(tiempo);
+    this.actualizarContadorTiempo(tiempo);
   }
 
   async volumenCambia(volumen: number) {
     await this.spotifyService.volumenCambia(volumen);
-    
   }
 
 

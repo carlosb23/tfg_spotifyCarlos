@@ -66,7 +66,7 @@ export class SpotifyService {
   obtenerUrlLogin() {
     let urlbase = 'https://accounts.spotify.com/authorize?';
     const clientId = 'client_id=' + '910ce5a3c01a467f9c6454ba844cddc6' + '&'; // Codigo de cliente id de spotify
-    const redirectUri = '&redirect_uri=' + 'https://tfgspotifycarlos.netlify.app/login'; // Direccion de redireccionamiento una vez que el usuario inicia sesion
+    const redirectUri = '&redirect_uri=' + 'http://localhost:4200/login/'; // Direccion de redireccionamiento una vez que el usuario inicia sesion
     const scope = '&scope=' + 'user-read-currently-playing user-modify-playback-state user-read-recently-played user-read-private user-library-read playlist-read-private playlist-modify-public playlist-modify-private'; // Permisos de acceso
     const response_type = '&response_type=token&show_dialog=true&';
 
@@ -100,7 +100,7 @@ export class SpotifyService {
   //En caso de caducar el token
   private handleError(error: HttpErrorResponse) {
     if (error.status === 401) {
-      // Redirigir al usuario a la página de inicio de sesión
+      this.logout();
       this.router.navigate(['/login']);
     }
     return console.error('Algo salió mal; por favor, inténtelo de nuevo más tarde.');
@@ -181,7 +181,7 @@ export class SpotifyService {
   logout() {
     sessionStorage.clear();
     sessionStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('/login');
   }
 
 

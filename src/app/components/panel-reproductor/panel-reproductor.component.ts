@@ -57,6 +57,8 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.obtenermusicasonando();
+    this.subs.push(this.reproductorService.contadorTiempo.subscribe(tiempo => this.contadorTiempo = tiempo));
+    this.subs.push(this.reproductorService.reproduciendo.subscribe(estado => this.reproduciendo = estado));
   }
 
   ngAfterViewChecked(): void {
@@ -87,15 +89,12 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
       this.duracionTotal = this.convertirTiempoASegundos(musica.tiempo);
       this.iniciarContadorDeTiempo();
     });
-
     this.subs.push(sub);
   }
 
   ngOnDestroy(): void {
     clearInterval(this.intervalId);
-    if (typeof document !== 'undefined') {
-      clearInterval(this.intervalId);
-    }
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   obtenerArtistas(musica: IMusica) {
@@ -124,20 +123,18 @@ export class PanelReproductorComponent implements OnInit, OnDestroy {
     
   }
 
-  iniciarContadorDeTiempo(): void { clearInterval(this.intervalId);
-    this.reproduciendo = true;
-
+  iniciarContadorDeTiempo(): void {
+    clearInterval(this.intervalId);
     if (this.musica && this.duracionTotal > 0) {
-      this.contadorTiempo = 0;
       this.intervalId = setInterval(() => {
         if (this.reproduciendo) {
           if (this.contadorTiempo < this.duracionTotal) {
             this.contadorTiempo++;
-            if (typeof document !== 'undefined') {
-              const progressBar = document.querySelector('.barra-progreso') as HTMLElement;
-              const valor = (this.contadorTiempo / this.duracionTotal) * 100;
-              progressBar.style.setProperty('--range-value', `${valor}%`);
-            }
+            this.reproductorService.actualizarContadorTiempo(this.contadorTiempo);
+            const progressBar = document.querySelector('.barra-progreso') as HTMLElement;
+            const valor = (this.contadorTiempo / this.duracionTotal) * 100;
+            progressBar.style.setProperty('--range-value', `${valor}%`);
+            // Actualiza la barra de progreso
           } else {
             clearInterval(this.intervalId);
             this.detectarFinalCancion();
