@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">tfg-spotify-carlos</string>
+    <string name="title_activity_main">tfg-spotify-carlos</string>
+    <string name="package_name">com.tfg.app</string>
+    <string name="custom_url_scheme">com.tfg.app</string>
+</resources>

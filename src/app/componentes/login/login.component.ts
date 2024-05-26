@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SpotifyService } from '../../../service/spotify.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-login',
@@ -28,8 +29,9 @@ export class LoginComponent implements OnInit {
   }
 
 
-  login() {
-    window.location.href = this.sessionService.obtenerUrlLogin();
+  async login() {
+    const url = this.sessionService.obtenerUrlLogin();
+    await Browser.open({ url: url, windowName: '_self' });
   }
 
   verificarTokencallback() {
@@ -40,7 +42,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  abrirPaginaLogin() {
+  async abrirPaginaLogin() {
     window.location.href = this.sessionService.obtenerUrlLogin();
   }
 
