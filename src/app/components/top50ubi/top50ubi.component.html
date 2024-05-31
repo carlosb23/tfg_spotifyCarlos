@@ -4,7 +4,7 @@
   </div>
   <div *ngFor="let playlist of top50List" class="playlist-item">
     <div class="imagenplaylist" [style.background-image]="'url(' + playlist.imagenUrl + ')'">
-      <div class="playlist-name nomovile">{{ playlist.name }}</div>
+      <span class="playlist-name nomovile">{{ playlist.name }}</span>
       <img class="nomovile" [src]="playlist.imagenUrl" alt="Imagen de lista de reproducción">
       <button class="iralista" (click)="irALista(playlist.id)">Ir a la lista</button>
     </div>
